@@ -1,0 +1,345 @@
+<ion-header class="ion-no-border">
+  <div class="top-banner-wrap">
+    <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
+  </div>
+  <ion-toolbar class="itinerary-toolbar">
+    <ion-title class="itinerary-title">
+      <span class="title-icon">🗺️</span> {{ 'itinerary.title' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="itinerary-content">
+
+  <!-- ===================== WIZARD STEPS 1-2 ===================== -->
+  <div class="wizard-wrap" *ngIf="step >= 1 && step <= 2">
+
+    <div class="progress-bar-wrap">
+      <div class="progress-step" [class.active]="step >= 1" [class.done]="step > 1">
+        <div class="step-dot">
+          <ion-icon name="checkmark" *ngIf="step > 1"></ion-icon>
+          <span *ngIf="step <= 1">1</span>
+        </div>
+        <span class="step-label">{{ 'itinerary.step_destination' | translate }}</span>
+      </div>
+      <div class="progress-line" [class.done]="step > 1"></div>
+      <div class="progress-step" [class.active]="step >= 2">
+        <div class="step-dot"><span>2</span></div>
+        <span class="step-label">{{ 'itinerary.step_prefs' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- STEP 1 — Destination -->
+    <div class="step-panel" *ngIf="step === 1">
+      <h2 class="step-title">{{ 'itinerary.step1_title' | translate }}</h2>
+
+      <!-- Sélecteur de mode -->
+      <div class="scope-selector">
+        <div class="scope-card" [class.selected]="scopeMode === 'wilaya'" (click)="setScopeMode('wilaya')">
+          <div class="scope-icon">🗺️</div>
+          <div class="scope-info">
+            <div class="scope-name">{{ 'itinerary.scope_wilaya' | translate }}</div>
+            <div class="scope-desc">{{ 'itinerary.scope_wilaya_desc' | translate }}</div>
+          </div>
+          <ion-icon name="checkmark-circle" class="scope-check" *ngIf="scopeMode === 'wilaya'"></ion-icon>
+        </div>
+        <div class="scope-card" [class.selected]="scopeMode === 'radius'" (click)="setScopeMode('radius')">
+          <div class="scope-icon">📍</div>
+          <div class="scope-info">
+            <div class="scope-name">{{ 'itinerary.scope_radius' | translate }}</div>
+            <div class="scope-desc">{{ 'itinerary.scope_radius_desc' | translate }}</div>
+          </div>
+          <ion-icon name="checkmark-circle" class="scope-check" *ngIf="scopeMode === 'radius'"></ion-icon>
+        </div>
+      </div>
+
+      <!-- MODE WILAYA -->
+      <div class="wilaya-section" *ngIf="scopeMode === 'wilaya'">
+        <p class="step-subtitle">{{ 'itinerary.step1_subtitle' | translate }}</p>
+        <div class="wilaya-chips-wrap">
+          <div class="wilaya-chips">
+            <div class="wilaya-chip" *ngFor="let w of wilayas"
+                 [class.selected]="isWilayaSelected(w)" (click)="toggleWilaya(w)">
+              <ion-icon name="checkmark-circle" *ngIf="isWilayaSelected(w)"></ion-icon>
+              {{ t.getWilaya(w) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODE RAYON -->
+      <div class="radius-section" *ngIf="scopeMode === 'radius'">
+        <p class="step-subtitle">{{ 'itinerary.scope_radius_desc' | translate }}</p>
+
+        <!-- Toggle geo / adresse -->
+        <div class="search-mode-toggle">
+          <button class="mode-btn" [class.active]="searchMode === 'geo'" (click)="setSearchMode('geo')">
+            <ion-icon name="navigate-outline"></ion-icon>
+            {{ 'itinerary.search_geo' | translate }}
+          </button>
+          <button class="mode-btn" [class.active]="searchMode === 'address'" (click)="setSearchMode('address')">
+            <ion-icon name="search-outline"></ion-icon>
+            {{ 'itinerary.search_address' | translate }}
+          </button>
+        </div>
+
+        <!-- Géolocalisation -->
+        <div class="geo-block" *ngIf="searchMode === 'geo'">
+          <button class="locate-btn" (click)="useMyLocation()" [disabled]="locating">
+            <ion-spinner name="crescent" *ngIf="locating"></ion-spinner>
+            <ion-icon name="locate-outline" *ngIf="!locating"></ion-icon>
+            {{ locating ? ('itinerary.locating' | translate) : ('itinerary.use_location' | translate) }}
+          </button>
+          <div class="location-badge" *ngIf="userLat !== null && searchMode === 'geo'">
+            <ion-icon name="checkmark-circle" class="badge-check"></ion-icon>
+            {{ 'itinerary.location_set' | translate }}
+          </div>
+          <div class="geo-error" *ngIf="geocodeError">
+            <ion-icon name="warning-outline"></ion-icon>
+            {{ 'itinerary.geo_error' | translate }}
+          </div>
+        </div>
+
+        <!-- Recherche par adresse -->
+        <div class="address-block" *ngIf="searchMode === 'address'">
+          <div class="address-input-wrap">
+            <ion-icon name="search-outline" class="addr-icon"></ion-icon>
+            <input class="address-input"
+                   [(ngModel)]="addressInput"
+                   (input)="onAddressInput()"
+                   (blur)="hideSuggestions()"
+                   [placeholder]="'itinerary.address_placeholder' | translate" />
+            <ion-spinner name="crescent" class="addr-spinner" *ngIf="geocoding"></ion-spinner>
+          </div>
+          <div class="suggestions-list" *ngIf="showSuggestions">
+            <div class="suggestion-item" *ngFor="let s of addressSuggestions"
+                 (mousedown)="selectSuggestion(s)">
+              <ion-icon name="location-outline"></ion-icon>
+              <span>{{ s.display_name }}</span>
+            </div>
+          </div>
+          <div class="location-badge" *ngIf="userLat !== null && searchMode === 'address'">
+            <ion-icon name="checkmark-circle" class="badge-check"></ion-icon>
+            {{ 'itinerary.location_set' | translate }}
+          </div>
+        </div>
+
+        <!-- Rayon -->
+        <div class="radius-block" *ngIf="userLat !== null">
+          <div class="radius-label-row">
+            <span class="radius-label">{{ 'itinerary.radius_label' | translate }}</span>
+            <span class="radius-value">{{ radiusKm }} km</span>
+          </div>
+          <div class="radius-presets">
+            <button class="radius-preset-btn"
+                    *ngFor="let r of radiusPresets"
+                    [class.active]="radiusKm === r"
+                    (click)="radiusKm = r">
+              {{ r }} km
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STEP 2 — Duration + Interests -->
+    <div class="step-panel" *ngIf="step === 2">
+      <h2 class="step-title">{{ 'itinerary.step2_title' | translate }}</h2>
+      <p class="step-subtitle">{{ 'itinerary.step2_subtitle' | translate }}</p>
+
+      <div class="field-section">
+        <label class="field-label">{{ 'itinerary.duration_label' | translate }}</label>
+        <div class="days-picker">
+          <button class="days-btn" (click)="days = days > 1 ? days - 1 : 1">
+            <ion-icon name="remove"></ion-icon>
+          </button>
+          <div class="days-display">
+            <span class="days-number">{{ days }}</span>
+            <span class="days-unit">{{ days === 1 ? ('itinerary.day' | translate) : ('itinerary.days' | translate) }}</span>
+          </div>
+          <button class="days-btn" (click)="days = days < 30 ? days + 1 : 30">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </div>
+        <div class="days-hint">
+          <span *ngIf="days <= 3">{{ 'itinerary.hint_short' | translate }}</span>
+          <span *ngIf="days > 3 && days <= 7">{{ 'itinerary.hint_ideal' | translate }}</span>
+          <span *ngIf="days > 7 && days <= 14">{{ 'itinerary.hint_long' | translate }}</span>
+          <span *ngIf="days > 14">{{ 'itinerary.hint_expedition' | translate }}</span>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <label class="field-label">{{ 'itinerary.interests_label' | translate }}
+          <span class="required">{{ 'itinerary.interests_required' | translate }}</span>
+        </label>
+        <div class="interests-grid">
+          <div class="interest-chip" *ngFor="let interest of interests"
+               [class.selected]="isInterestSelected(interest.id)"
+               (click)="toggleInterest(interest.id)">
+            <span class="interest-emoji">{{ interest.emoji }}</span>
+            <span class="interest-label">{{ 'cat.' + interest.id | translate }}</span>
+            <ion-icon name="checkmark-circle" class="chip-check" *ngIf="isInterestSelected(interest.id)"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wizard-nav">
+      <ion-button fill="outline" class="btn-back" (click)="back()" *ngIf="step > 1">
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        {{ 'itinerary.btn_back' | translate }}
+      </ion-button>
+      <ion-button expand="block" class="btn-primary btn-next" (click)="next()" [disabled]="!canGoNext()">
+        {{ step === 2 ? ('itinerary.btn_generate' | translate) : ('itinerary.btn_continue' | translate) }}
+        <ion-icon name="arrow-forward-outline" slot="end" *ngIf="step < 2"></ion-icon>
+      </ion-button>
+    </div>
+
+  </div>
+
+  <!-- ===================== STEP 3 — LOADING / RESULTS ===================== -->
+  <div class="result-wrap" *ngIf="step === 3">
+
+    <!-- Loading -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="loading-animation">
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="loading-icon">🧭</div>
+      </div>
+      <h3 class="loading-title">{{ 'itinerary.loading_title' | translate }}</h3>
+    </div>
+
+    <!-- Error -->
+    <div class="error-state" *ngIf="!loading && error">
+      <div class="error-icon">⚠️</div>
+      <h3>Oops !</h3>
+      <p>{{ error }}</p>
+      <ion-button expand="block" class="btn-primary" (click)="reset()">{{ 'itinerary.btn_retry' | translate }}</ion-button>
+    </div>
+
+    <!-- Result -->
+    <div class="itinerary-result" *ngIf="!loading && itinerary">
+
+      <!-- Header -->
+      <div class="result-header">
+        <div class="result-badge"><span>{{ 'itinerary.result_badge' | translate }}</span></div>
+        <h1 class="result-title">{{ itinerary.title }}</h1>
+        <p class="result-summary">{{ itinerary.summary }}</p>
+        <div class="result-meta">
+          <span class="meta-chip">📅 {{ itinerary.totalDays }} {{ itinerary.totalDays === 1 ? ('itinerary.day' | translate) : ('itinerary.days' | translate) }}</span>
+          <span class="meta-chip">🕐 6 étapes/jour</span>
+          <span class="meta-chip" *ngIf="scopeMode === 'wilaya' && selectedWilayas.length > 0">📍 {{ selectedWilayas.join(', ') }}</span>
+          <span class="meta-chip" *ngIf="scopeMode === 'radius'">📏 {{ radiusKm }} km</span>
+        </div>
+        <button class="share-itinerary-btn" (click)="shareItinerary()">
+          <ion-icon name="share-outline"></ion-icon>
+          {{ 'itinerary.share' | translate }}
+        </button>
+      </div>
+
+      <!-- Circuit structure info -->
+      <div class="circuit-structure-info">
+        <div class="structure-item"><span>☕</span> {{ 'itinerary.slot_cafe' | translate }}</div>
+        <div class="structure-item"><span>🏛️</span> {{ 'itinerary.slot_visit_matin' | translate }}</div>
+        <div class="structure-item"><span>🍽️</span> {{ 'itinerary.slot_lunch' | translate }}</div>
+        <div class="structure-item"><span>🏛️</span> {{ 'itinerary.slot_visit_apm' | translate }}</div>
+        <div class="structure-item"><span>🛍️</span> {{ 'itinerary.slot_artisanat' | translate }}</div>
+        <div class="structure-item"><span>🍽️</span> {{ 'itinerary.slot_dinner' | translate }}</div>
+      </div>
+
+      <!-- Days accordion -->
+      <div class="days-list">
+        <div class="day-card" *ngFor="let day of itinerary.days; let i = index"
+             [class.expanded]="expandedDay === i">
+
+          <div class="day-header" (click)="toggleDay(i)">
+            <div class="day-number">J{{ day.day }}</div>
+            <div class="day-header-content">
+              <div class="day-title">{{ day.title }}</div>
+              <div class="day-wilaya">
+                <ion-icon name="location-outline"></ion-icon>
+                {{ t.getWilaya(day.wilaya) }}
+              </div>
+            </div>
+            <div class="day-places-count">{{ 'itinerary.day' | translate }} {{ day.day }}/{{ itinerary.totalDays }}</div>
+            <ion-icon [name]="expandedDay === i ? 'chevron-up' : 'chevron-down'" class="day-chevron"></ion-icon>
+          </div>
+
+          <div class="day-body" *ngIf="expandedDay === i">
+
+            <!-- Places timeline -->
+            <div class="places-timeline">
+              <div class="timeline-item" *ngFor="let place of day.places; let pi = index">
+                <div class="timeline-dot" (click)="navigateToPlace(place.id, $event)" [class.clickable]="!!place.id">
+                  <span>{{ getCategoryEmoji(place.category) }}</span>
+                </div>
+                <div class="timeline-content" (click)="navigateToPlace(place.id, $event)" [class.clickable]="!!place.id">
+                  <div class="place-time-row">
+                    <span class="place-time">{{ getSlotLabel(place.time) }}</span>
+                    <span class="place-duration">⏱ {{ place.duration }}</span>
+                  </div>
+                  <div class="place-name">
+                    {{ getItineraryPlaceName(place) }}
+                    <ion-icon name="open-outline" class="place-link-icon" *ngIf="place.id"></ion-icon>
+                  </div>
+                  <div class="place-category">{{ 'cat.' + place.category | translate }}</div>
+                </div>
+                <button class="place-remove-btn" (click)="removePlaceFromDay(i, pi, $event)" title="Supprimer">
+                  <ion-icon name="close-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+
+            <!-- Add place button -->
+            <button class="add-place-btn" (click)="openAddPlace(i, $event)"
+                    [class.active]="addPlaceToDayIndex === i">
+              <ion-icon [name]="addPlaceToDayIndex === i ? 'close-outline' : 'add-circle-outline'"></ion-icon>
+              {{ addPlaceToDayIndex === i ? ('itinerary.cancel' | translate) : ('itinerary.add_place' | translate) }}
+            </button>
+
+            <!-- Search panel -->
+            <div class="add-place-panel" *ngIf="addPlaceToDayIndex === i" (click)="$event.stopPropagation()">
+              <div class="search-input-wrap">
+                <ion-icon name="search-outline"></ion-icon>
+                <input class="search-input"
+                       [(ngModel)]="addPlaceQuery"
+                       (input)="onAddPlaceSearch()"
+                       [placeholder]="'itinerary.search_place_placeholder' | translate"
+                       autofocus />
+              </div>
+              <div class="search-results">
+                <div class="search-result-item" *ngFor="let p of searchResults"
+                     (click)="addPlaceToDay(p, $event)">
+                  <span class="result-emoji">{{ getCategoryEmoji(p.category) }}</span>
+                  <div class="result-info">
+                    <div class="result-name">{{ p.nameFr }}</div>
+                    <div class="result-meta-row">{{ t.getWilaya(p.wilaya) }} · {{ 'cat.' + p.category | translate }}</div>
+                  </div>
+                  <ion-icon name="add-outline" class="result-add-icon"></ion-icon>
+                </div>
+                <div class="search-empty" *ngIf="searchResults.length === 0">
+                  {{ 'itinerary.no_results' | translate }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="result-actions">
+        <ion-button expand="block" fill="outline" class="btn-reset" (click)="reset()">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          {{ 'itinerary.btn_reset' | translate }}
+        </ion-button>
+      </div>
+
+      <div style="height: 40px"></div>
+    </div>
+
+  </div>
+
+</ion-content>

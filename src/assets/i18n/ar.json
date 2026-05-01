@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "GoDZ – اكتشف الجزائر",
+    "subtitle": "اكتشف الجزائر"
+  },
+  "tab": {
+    "home": "الرئيسية",
+    "categories": "الفئات",
+    "map": "الخريطة",
+    "favorites": "المفضلة"
+  },
+  "home": {
+    "featured": "أماكن مميزة",
+    "top_visited": "الأكثر زيارة",
+    "hero_title": "اكتشف الجزائر",
+    "hero_subtitle": "بلد بألف وجه"
+  },
+  "categories": {
+    "title": "الفئات"
+  },
+  "cat": {
+    "monuments": "المعالم",
+    "culture": "الثقافة",
+    "loisirs": "الترفيه",
+    "plages": "الشواطئ",
+    "montagnes": "الجبال",
+    "desert": "الصحراء",
+    "restaurants": "المطاعم",
+    "salons": "مقاهي الشاي"
+  },
+  "map": {
+    "title": "الخريطة",
+    "select_wilaya": "اختر ولاية",
+    "radius": "النطاق",
+    "my_location": "موقعي",
+    "nearby": "الأماكن القريبة"
+  },
+  "favorites": {
+    "title": "مفضلتي",
+    "empty": "لا توجد مفضلات حتى الآن",
+    "empty_sub": "أضف أماكن بالنقر على القلب"
+  },
+  "detail": {
+    "reviews": "التقييمات",
+    "see_reviews": "عرض التقييمات",
+    "audio_guide": "دليل صوتي",
+    "audio_stop": "إيقاف",
+    "add_favorite": "إضافة إلى المفضلة",
+    "remove_favorite": "إزالة من المفضلة",
+    "opening_hours": "ساعات العمل",
+    "address": "العنوان",
+    "rating": "التقييم"
+  },
+  "common": {
+    "km": "كم",
+    "back": "رجوع",
+    "loading": "جارٍ التحميل...",
+    "search": "بحث",
+    "all": "الكل"
+  }
+}

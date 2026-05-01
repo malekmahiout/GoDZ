@@ -1,0 +1,27 @@
+<ion-header class="ion-no-border">
+  <div class="top-banner-wrap">
+    <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
+  </div>
+  <ion-toolbar>
+    <ion-title>Catégories</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-intro">
+    <h2>Que voulez-vous découvrir ?</h2>
+    <p>Choisissez une catégorie</p>
+  </div>
+
+  <div class="cat-grid">
+    <div class="cat-item" *ngFor="let cat of categories" (click)="goToCategory(cat.key)">
+      <div class="cat-icon-wrap" [style.background]="cat.gradient">
+        <span class="cat-emoji">{{cat.emoji}}</span>
+      </div>
+      <p class="cat-name">{{getCategoryLabel(cat.key)}}</p>
+      <span class="cat-count">{{cat.count}} lieux</span>
+    </div>
+  </div>
+
+  <div style="height: 24px"></div>
+</ion-content>

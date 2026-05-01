@@ -1,0 +1,234 @@
+/*
+ * GoDZ — Global CSS — Design Premium · Blanc + Zellij
+ */
+
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+* { box-sizing: border-box; }
+
+/* Reset complet des boutons natifs — supprime carrés/bordures navigateur */
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  &:focus { outline: none; }
+  &:focus-visible { outline: none; }
+}
+
+/* Supprime le carré/rectangle autour des ion-button fill="clear" */
+ion-button {
+  --box-shadow: none;
+  --ripple-color: transparent;
+  --background-hover: transparent;
+  --background-focused: transparent;
+  --background-activated: transparent;
+
+  &::part(native) {
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+/* Spécifique aux boutons dans les headers/toolbars */
+ion-toolbar ion-button[fill="clear"] {
+  --background: transparent;
+  --background-hover: rgba(0,0,0,0.04);
+  --background-activated: rgba(0,0,0,0.06);
+  --border-radius: 50%;
+  --box-shadow: none;
+}
+
+ion-buttons ion-button {
+  --background: transparent;
+  --box-shadow: none;
+}
+
+body { background: #FFFFFF; color: #111827; }
+
+// ── Fond blanc effet zellij — motif diamant géométrique ──────
+ion-content {
+  --background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 0L28 14L14 28L0 14Z' fill='none' stroke='%23006233' stroke-width='0.6' stroke-opacity='0.08'/%3E%3C/svg%3E")
+    0 0 / 28px 28px repeat,
+    #FFFFFF;
+  --color: #111827;
+  --padding-bottom: 80px;
+}
+
+ion-content::part(scroll) { scroll-behavior: smooth; }
+
+// ── Toolbar blanc ────────────────────────────────────────────
+ion-toolbar {
+  --background: #FFFFFF;
+  --color: #111827;
+  --border-color: #F0F0F0;
+  --min-height: 56px;
+}
+
+ion-back-button { --color: #006233; }
+
+ion-list {
+  --ion-item-background: #FFFFFF;
+  background: transparent !important;
+}
+
+ion-item {
+  --background: #FFFFFF;
+  --color: #111827;
+  --border-color: #E5E7EB;
+}
+
+ion-label { --color: #111827; }
+
+ion-card {
+  border-radius: 18px;
+  --background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 8px 24px rgba(0,0,0,0.06);
+  border: 1px solid #F0F0F0;
+}
+
+ion-badge { border-radius: 8px; }
+
+ion-searchbar {
+  --background: #F3F4F6;
+  --color: #111827;
+  --placeholder-color: #9CA3AF;
+  --icon-color: #9CA3AF;
+  --border-radius: 14px;
+  --box-shadow: none;
+}
+
+// ============================================================
+// SHARED CARD
+// ============================================================
+
+.place-card {
+  background: #FFFFFF;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 8px 24px rgba(0,0,0,0.06);
+  overflow: hidden;
+  margin: 8px 16px;
+  border: 1px solid #F0F0F0;
+}
+
+// ============================================================
+// SECTION HEADER — avec accent vert
+// ============================================================
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px 12px;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+    letter-spacing: -0.4px;
+    position: relative;
+    padding-left: 12px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      bottom: 2px;
+      width: 3.5px;
+      background: #006233;
+      border-radius: 2px;
+    }
+  }
+
+  a {
+    color: #006233;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    background: rgba(0,98,51,0.08);
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+}
+
+// ============================================================
+// BADGES PARTAGÉS
+// ============================================================
+
+.star-rating {
+  color: #B8912A;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.wilaya-badge {
+  background: rgba(0,98,51,0.08);
+  color: #004D27;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+  border: 1px solid rgba(0,98,51,0.12);
+}
+
+.category-chip {
+  background: rgba(0,98,51,0.08);
+  color: #004D27;
+  border: none;
+  font-weight: 600;
+}
+
+// ============================================================
+// UTILITAIRES
+// ============================================================
+
+.text-primary   { color: #006233; }
+.text-secondary { color: #D21034; }
+.text-gold      { color: #B8912A; }
+.bg-primary     { background: #006233; }
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-in { animation: fadeInUp 0.3s ease both; }
+
+// ============================================================
+// RTL
+// ============================================================
+
+[dir="rtl"] {
+  .card-rating, .fav-rating, .item-rating, .place-rating {
+    direction: rtl;
+  }
+}

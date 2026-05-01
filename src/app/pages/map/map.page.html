@@ -1,0 +1,85 @@
+<ion-header class="ion-no-border">
+  <div class="top-banner-wrap">
+    <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
+  </div>
+  <ion-toolbar>
+    <ion-title>{{ 'map.explorer_title' | translate }}</ion-title>
+  </ion-toolbar>
+  <div class="search-always">
+    <ion-searchbar
+      [placeholder]="'common.search' | translate"
+      [(ngModel)]="searchQuery"
+      (ionInput)="onSearch($event)"
+      class="explorer-searchbar">
+    </ion-searchbar>
+  </div>
+</ion-header>
+
+<ion-content>
+
+  <!-- Wilaya chips -->
+  <div class="wilaya-section">
+    <p class="section-label">{{ 'map.filter_wilaya' | translate }}</p>
+    <div class="wilaya-chips-row">
+      <button class="wilaya-chip"
+              [class.active]="!selectedWilaya"
+              (click)="selectedWilaya=null; applyFilters()">{{ 'map.all_wilayas' | translate }}</button>
+      <button class="wilaya-chip"
+              *ngFor="let w of wilayas"
+              [class.active]="selectedWilaya === w"
+              (click)="selectWilaya(w)">{{w}}</button>
+    </div>
+  </div>
+
+  <!-- Sort bar -->
+  <div class="sort-bar">
+    <button [class.active]="sortBy==='rating'"     (click)="setSortBy('rating')">⭐ {{ 'map.sort_rating' | translate }}</button>
+    <button [class.active]="sortBy==='popularity'" (click)="setSortBy('popularity')">🔥 {{ 'map.sort_popularity' | translate }}</button>
+    <button [class.active]="sortBy==='reviews'"    (click)="setSortBy('reviews')">💬 {{ 'map.sort_reviews' | translate }}</button>
+  </div>
+
+  <!-- Category filter -->
+  <div class="cat-filter">
+    <button *ngFor="let c of categoryFilters"
+            [class.active]="selectedCat===c.id"
+            (click)="selectedCat=c.id; applyFilters()">
+      {{c.emoji}} {{ 'cat.' + c.id | translate }}
+    </button>
+  </div>
+
+  <!-- Results count -->
+  <div class="results-header">
+    <strong>{{filteredPlaces.length}}</strong> {{ 'map.places_found' | translate }}
+    <span *ngIf="selectedWilaya"> à <strong>{{selectedWilaya}}</strong></span>
+  </div>
+
+  <!-- Place cards -->
+  <div class="results-list">
+    <div class="result-card" *ngFor="let place of filteredPlaces">
+      <div class="result-card-inner" (click)="goToPlace(place.id)">
+        <img [placePhoto]="place" class="result-img" [alt]="t.getPlaceName(place)">
+        <div class="result-info">
+          <p class="result-name">{{ t.getPlaceName(place) }}</p>
+          <div class="badges-row">
+            <span class="wilaya-badge">{{place.wilaya}}</span>
+            <span class="cat-badge">{{getCatEmoji(place.category)}} {{ 'cat.' + place.category | translate }}</span>
+          </div>
+          <div class="result-meta">
+            <span class="star-rating">⭐ {{place.googleRating}}</span>
+            <span class="review-count"> · {{place.googleReviewCount | number}} {{ 'map.sort_reviews' | translate }}</span>
+          </div>
+          <p class="result-desc">{{ t.getPlaceDescription(place) | slice:0:75 }}...</p>
+        </div>
+      </div>
+      <button class="gmaps-card-btn" (click)="openGoogleMaps(place)">
+        {{ 'map.see_gmaps' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="filteredPlaces.length === 0">
+    <p>{{ 'map.no_result' | translate }}</p>
+    <button (click)="clearAll()">{{ 'map.clear_filters' | translate }}</button>
+  </div>
+
+</ion-content>

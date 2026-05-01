@@ -1,0 +1,61 @@
+// ============================================================
+// TAB BAR — Blanc premium
+// ============================================================
+
+.godz-tab-bar {
+  --background: #FFFFFF;
+  --border: none;
+  box-shadow:
+    0 -1px 0 #F0F0F0,
+    0 -6px 20px rgba(0,0,0,0.06);
+  height: 64px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+ion-tab-button {
+  --color: #9CA3AF;
+  --color-selected: #006233;
+  --ripple-color: rgba(0,98,51,0.10);
+  position: relative;
+
+  ion-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-top: 3px;
+    letter-spacing: 0.1px;
+  }
+
+  ion-icon { font-size: 22px; }
+
+  &.tab-selected {
+    ion-icon  { color: #006233; }
+    ion-label { color: #006233; font-weight: 700; }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      background: #006233;
+      border-radius: 0 0 3px 3px;
+    }
+  }
+
+  &.tab-ai {
+    ion-icon {
+      color: #7C3AED;
+      filter: drop-shadow(0 0 4px rgba(124,58,237,0.35));
+    }
+    ion-label { color: #7C3AED; }
+
+    &.tab-selected {
+      ion-icon { color: #7C3AED; }
+      ion-label { color: #7C3AED; }
+
+      &::after { background: #7C3AED; }
+    }
+  }
+}

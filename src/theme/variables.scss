@@ -1,0 +1,108 @@
+// GoDZ — Design Épuré · Blanc + Zellij
+// Palette : Blanc · Vert algérien #006233 · Or #B8912A · Charcoal #111827
+
+:root {
+  // === Vert algérien ===
+  --ion-color-primary: #006233;
+  --ion-color-primary-rgb: 0,98,51;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #004D27;
+  --ion-color-primary-tint: #1A7244;
+
+  // === Rouge drapeau ===
+  --ion-color-secondary: #D21034;
+  --ion-color-secondary-rgb: 210,16,52;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #B90E2E;
+  --ion-color-secondary-tint: #D72848;
+
+  // === Or raffiné ===
+  --ion-color-tertiary: #B8912A;
+  --ion-color-tertiary-rgb: 184,145,42;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255,255,255;
+  --ion-color-tertiary-shade: #9A7A22;
+  --ion-color-tertiary-tint: #C9A843;
+
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45,211,111;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255,196,9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  --ion-color-danger: #D21034;
+  --ion-color-danger-rgb: 210,16,52;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-shade: #B90E2E;
+  --ion-color-danger-tint: #D72848;
+
+  --ion-color-dark: #111827;
+  --ion-color-dark-rgb: 17,24,39;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255,255,255;
+  --ion-color-dark-shade: #0A0F18;
+  --ion-color-dark-tint: #2A3344;
+
+  --ion-color-medium: #6B7280;
+  --ion-color-medium-rgb: 107,114,128;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-shade: #555B66;
+  --ion-color-medium-tint: #7D8490;
+
+  --ion-color-light: #F3F4F6;
+  --ion-color-light-rgb: 243,244,246;
+  --ion-color-light-contrast: #111827;
+  --ion-color-light-contrast-rgb: 17,24,39;
+  --ion-color-light-shade: #E5E7EB;
+  --ion-color-light-tint: #F9FAFB;
+
+  // === Fond blanc ===
+  --ion-background-color: #FFFFFF;
+  --ion-background-color-rgb: 255,255,255;
+  --ion-text-color: #111827;
+  --ion-text-color-rgb: 17,24,39;
+  --ion-font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+
+  --ion-item-background: #FFFFFF;
+  --ion-card-background: #FFFFFF;
+  --ion-border-color: #E5E7EB;
+
+  // === Toolbar blanc ===
+  --ion-toolbar-background: #FFFFFF;
+  --ion-toolbar-color: #111827;
+  --ion-toolbar-border-color: #E5E7EB;
+
+  // === Tab bar blanc ===
+  --ion-tab-bar-background: #FFFFFF;
+  --ion-tab-bar-border-color: #E5E7EB;
+  --ion-tab-bar-color: #9CA3AF;
+  --ion-tab-bar-color-selected: #006233;
+
+  --ion-color-step-50:  #F9FAFB;
+  --ion-color-step-100: #F3F4F6;
+  --ion-color-step-150: #E9ECEF;
+  --ion-color-step-200: #DEE2E6;
+  --ion-color-step-250: #CED4DA;
+  --ion-color-step-300: #ADB5BD;
+  --ion-color-step-350: #8D969F;
+  --ion-color-step-400: #6B7280;
+  --ion-color-step-450: #4B5563;
+  --ion-color-step-500: #374151;
+  --ion-color-step-550: #2D3748;
+  --ion-color-step-600: #252D3A;
+  --ion-color-step-650: #1F2535;
+  --ion-color-step-700: #1A1F2E;
+  --ion-color-step-750: #151925;
+  --ion-color-step-800: #10141E;
+  --ion-color-step-850: #0C1018;
+  --ion-color-step-900: #070A10;
+  --ion-color-step-950: #030508;
+}

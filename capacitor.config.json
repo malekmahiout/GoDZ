@@ -1,0 +1,8 @@
+{
+  "appId": "dz.godz_mobile.app",
+  "appName": "GoDZ",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "GoDZ – Découvrez l'Algérie",
+    "subtitle": "Découvrez l'Algérie"
+  },
+  "tab": {
+    "home": "Accueil",
+    "categories": "Catégories",
+    "map": "Carte",
+    "favorites": "Favoris"
+  },
+  "home": {
+    "featured": "Lieux en vedette",
+    "top_visited": "Les plus visités",
+    "hero_title": "Découvrez l'Algérie",
+    "hero_subtitle": "Un pays aux mille visages"
+  },
+  "categories": {
+    "title": "Catégories"
+  },
+  "cat": {
+    "monuments": "Monuments",
+    "culture": "Culture",
+    "loisirs": "Loisirs",
+    "plages": "Plages",
+    "montagnes": "Montagnes",
+    "desert": "Désert",
+    "restaurants": "Restaurants",
+    "salons": "Salons de thé"
+  },
+  "map": {
+    "title": "Carte",
+    "select_wilaya": "Choisir une wilaya",
+    "radius": "Rayon",
+    "my_location": "Ma position",
+    "nearby": "Lieux à proximité"
+  },
+  "favorites": {
+    "title": "Mes Favoris",
+    "empty": "Aucun favori pour l'instant",
+    "empty_sub": "Ajoutez des lieux en cliquant sur le cœur"
+  },
+  "detail": {
+    "reviews": "Avis",
+    "see_reviews": "Voir les avis",
+    "audio_guide": "Guide audio",
+    "audio_stop": "Arrêter",
+    "add_favorite": "Ajouter aux favoris",
+    "remove_favorite": "Retirer des favoris",
+    "opening_hours": "Horaires d'ouverture",
+    "address": "Adresse",
+    "rating": "Note"
+  },
+  "common": {
+    "km": "km",
+    "back": "Retour",
+    "loading": "Chargement...",
+    "search": "Rechercher",
+    "all": "Tous"
+  }
+}

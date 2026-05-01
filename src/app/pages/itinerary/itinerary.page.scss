@@ -1,0 +1,1461 @@
+// ============================================================
+// ITINERARY PAGE — Circuit IA · Design Premium
+// ============================================================
+
+.top-banner-wrap {
+  width: 100%;
+  background: #006233;
+  padding-top: var(--ion-safe-area-top, 28px);
+  .top-banner-img { display: block; width: 100%; height: auto; }
+}
+
+$green: #006233;
+$green-light: #e8f5ee;
+$green-mid: #2d7a50;
+$text-primary: #111827;
+$text-secondary: #6B7280;
+$border: #E5E7EB;
+$white: #FFFFFF;
+$radius: 16px;
+$radius-sm: 10px;
+
+// ============================================================
+// HEADER
+// ============================================================
+
+.itinerary-toolbar {
+  --background: #{$white};
+  --border-width: 0 0 1px 0;
+  --border-color: #{$border};
+  --padding-top: 0;
+  --ion-safe-area-top: 0px;
+}
+
+.itinerary-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: $text-primary;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .title-icon { font-size: 18px; }
+}
+
+// ============================================================
+// CONTENT
+// ============================================================
+
+.itinerary-content {
+  --background: #F8FAFC;
+}
+
+// ============================================================
+// API KEY CARD
+// ============================================================
+
+.wizard-wrap {
+  padding: 20px 16px 40px;
+  min-height: 100%;
+}
+
+.api-key-card {
+  background: $white;
+  border-radius: $radius;
+  padding: 32px 24px 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  text-align: center;
+  margin-top: 20px;
+
+  .api-icon { font-size: 48px; margin-bottom: 16px; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-primary;
+    margin: 0 0 10px;
+  }
+
+  .api-desc {
+    font-size: 14px;
+    color: $text-secondary;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .key-input-item {
+    --background: #F3F4F6;
+    --border-radius: 12px;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    border-radius: 12px;
+    margin-bottom: 16px;
+
+    .key-input {
+      --padding-start: 16px;
+      --padding-end: 16px;
+      font-size: 15px;
+    }
+  }
+
+  .btn-skip {
+    --color: #{$text-secondary};
+    margin-top: 4px;
+  }
+}
+
+// ============================================================
+// PROGRESS BAR
+// ============================================================
+
+.progress-bar-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 28px;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  .step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: $border;
+    color: $text-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+
+  .step-label {
+    font-size: 11px;
+    color: $text-secondary;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  &.active {
+    .step-dot {
+      background: $green;
+      color: $white;
+    }
+    .step-label { color: $green; }
+  }
+
+  &.done {
+    .step-dot {
+      background: $green;
+      color: $white;
+      ion-icon { font-size: 16px; }
+    }
+  }
+}
+
+.progress-line {
+  width: 60px;
+  height: 2px;
+  background: $border;
+  margin: 0 8px;
+  margin-bottom: 20px;
+  transition: background 0.3s ease;
+
+  &.done { background: $green; }
+}
+
+// ============================================================
+// STEP PANELS
+// ============================================================
+
+.step-panel {
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 0 0 6px;
+}
+
+.step-subtitle {
+  font-size: 14px;
+  color: $text-secondary;
+  margin: 0 0 24px;
+}
+
+// ============================================================
+// SCOPE CARDS
+// ============================================================
+
+.scope-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.scope-card {
+  background: $white;
+  border: 2px solid $border;
+  border-radius: $radius;
+  padding: 20px 14px 16px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+  .scope-emoji { font-size: 36px; margin-bottom: 10px; }
+
+  .scope-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 4px;
+  }
+
+  .scope-desc {
+    font-size: 11px;
+    color: $text-secondary;
+    line-height: 1.4;
+  }
+
+  .scope-check {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    ion-icon {
+      font-size: 20px;
+      color: $green;
+    }
+  }
+
+  &.selected {
+    border-color: $green;
+    background: $green-light;
+    .scope-label { color: $green; }
+  }
+
+  &:active { transform: scale(0.97); }
+}
+
+// ============================================================
+// WILAYA SELECTOR
+// ============================================================
+
+.wilaya-chips-wrap {
+  margin-bottom: 20px;
+
+  .field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .wilaya-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .wilaya-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 24px;
+      border: 1.5px solid $border;
+      background: $white;
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-primary;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      ion-icon {
+        font-size: 16px;
+        color: $green;
+      }
+
+      &.selected {
+        background: $green;
+        border-color: $green;
+        color: $white;
+
+        ion-icon { color: $white; }
+      }
+    }
+  }
+}
+
+// ============================================================
+// FIELD SECTION
+// ============================================================
+
+.field-section {
+  margin-bottom: 28px;
+
+  .field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 14px;
+
+    .required {
+      text-transform: none;
+      font-weight: 400;
+      color: #9CA3AF;
+      letter-spacing: 0;
+    }
+  }
+}
+
+// ============================================================
+// DAYS PICKER
+// ============================================================
+
+.days-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: $white;
+  border-radius: $radius;
+  padding: 20px;
+  border: 1.5px solid $border;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 10px;
+}
+
+.days-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $green-light;
+  border: none;
+  color: $green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  ion-icon { font-size: 22px; }
+
+  &:active {
+    background: $green;
+    color: $white;
+    transform: scale(0.92);
+  }
+}
+
+.days-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+
+  .days-number {
+    font-size: 44px;
+    font-weight: 800;
+    color: $green;
+    line-height: 1;
+  }
+
+  .days-unit {
+    font-size: 14px;
+    color: $text-secondary;
+    margin-top: 2px;
+  }
+}
+
+.days-hint {
+  text-align: center;
+  font-size: 13px;
+  color: $text-secondary;
+  font-style: italic;
+}
+
+// ============================================================
+// INTERESTS GRID
+// ============================================================
+
+.interests-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.interest-chip {
+  background: $white;
+  border: 2px solid $border;
+  border-radius: $radius-sm;
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+
+  .interest-emoji { font-size: 20px; flex-shrink: 0; }
+
+  .interest-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: $text-primary;
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .chip-check {
+    font-size: 16px;
+    color: $green;
+    flex-shrink: 0;
+  }
+
+  &.selected {
+    border-color: $green;
+    background: $green-light;
+    .interest-label { color: $green; }
+  }
+
+  &:active { transform: scale(0.96); }
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+
+.wizard-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 32px;
+  align-items: center;
+
+  .btn-back {
+    --border-color: #{$border};
+    --color: #{$text-secondary};
+    --border-radius: 12px;
+    flex-shrink: 0;
+    height: 50px;
+  }
+
+  .btn-next {
+    flex: 1;
+  }
+}
+
+// ============================================================
+// PRIMARY BUTTON
+// ============================================================
+
+.btn-primary {
+  --background: #{$green};
+  --background-activated: #{$green-mid};
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0,98,51,0.25);
+  font-weight: 700;
+  height: 50px;
+  font-size: 15px;
+}
+
+// ============================================================
+// STEP 3 — LOADING STATE
+// ============================================================
+
+.result-wrap {
+  min-height: 100%;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  min-height: 60vh;
+}
+
+.loading-animation {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.orbit-ring {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: $green;
+  border-right-color: rgba(0,98,51,0.3);
+  animation: spin 1.2s linear infinite;
+}
+
+.orbit-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: $green;
+  border-radius: 50%;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-icon {
+  font-size: 36px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.loading-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+.loading-message {
+  font-size: 14px;
+  color: $text-secondary;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+// ============================================================
+// ERROR STATE
+// ============================================================
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  min-height: 50vh;
+
+  .error-icon { font-size: 56px; margin-bottom: 16px; }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-primary;
+    margin: 0 0 10px;
+  }
+
+  p {
+    font-size: 14px;
+    color: $text-secondary;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 300px;
+  }
+}
+
+// ============================================================
+// ITINERARY RESULT
+// ============================================================
+
+.itinerary-result {
+  padding: 0 0 40px;
+  animation: fadeIn 0.3s ease;
+}
+
+.result-header {
+  background: linear-gradient(145deg, $green 0%, $green-mid 100%);
+  padding: 32px 20px 28px;
+  color: $white;
+  text-align: center;
+}
+
+.result-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+}
+
+.result-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: $white;
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+
+.result-summary {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+
+  .meta-chip {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+.share-itinerary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255,255,255,0.4);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 8px auto 0;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+
+  ion-icon { font-size: 16px; }
+
+  &:active { background: rgba(255,255,255,0.28); }
+}
+
+// ============================================================
+// DAYS LIST
+// ============================================================
+
+.days-list {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.day-card {
+  background: $white;
+  border-radius: $radius;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 1.5px solid $border;
+  transition: border-color 0.2s ease;
+
+  &.expanded {
+    border-color: rgba(0,98,51,0.35);
+    box-shadow: 0 4px 16px rgba(0,98,51,0.1);
+  }
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+
+  &:active { background: #F9FAFB; }
+}
+
+.day-number {
+  background: $green;
+  color: $white;
+  font-size: 13px;
+  font-weight: 800;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.day-header-content {
+  flex: 1;
+  min-width: 0;
+
+  .day-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: $text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .day-wilaya {
+    font-size: 12px;
+    color: $text-secondary;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 2px;
+
+    ion-icon { font-size: 12px; }
+  }
+}
+
+.day-places-count {
+  font-size: 11px;
+  color: $text-secondary;
+  background: #F3F4F6;
+  border-radius: 20px;
+  padding: 3px 8px;
+  flex-shrink: 0;
+}
+
+.day-chevron {
+  font-size: 18px;
+  color: $text-secondary;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.expanded .day-chevron { transform: rotate(180deg); }
+
+.day-body {
+  padding: 0 16px 16px;
+  border-top: 1px solid $border;
+  animation: fadeIn 0.2s ease;
+}
+
+.day-description {
+  font-size: 13px;
+  color: $text-secondary;
+  line-height: 1.6;
+  padding: 12px 0 16px;
+  margin: 0;
+}
+
+// ============================================================
+// PLACES TIMELINE
+// ============================================================
+
+.places-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #F3F4F6;
+  position: relative;
+
+  &:last-child { border-bottom: none; }
+
+  &.clickable {
+    cursor: pointer;
+
+    &:active { background: #F9FAFB; margin: 0 -16px; padding: 12px 16px; border-radius: 8px; }
+  }
+}
+
+.timeline-dot {
+  width: 36px;
+  height: 36px;
+  background: $green-light;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.timeline-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.place-time-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+
+  .place-time {
+    font-size: 11px;
+    color: $green;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .place-duration {
+    font-size: 11px;
+    color: $text-secondary;
+  }
+}
+
+.place-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  .place-link-icon {
+    font-size: 12px;
+    color: $green;
+    flex-shrink: 0;
+  }
+}
+
+.place-tips {
+  font-size: 12px;
+  color: $text-secondary;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.place-category {
+  font-size: 11px;
+  color: $text-secondary;
+  margin-top: 2px;
+}
+
+.place-remove-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #FEE2E2;
+  border: none;
+  color: #EF4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  align-self: center;
+  transition: background 0.15s;
+
+  ion-icon { font-size: 15px; }
+
+  &:active { background: #FECACA; }
+}
+
+// ============================================================
+// ADD PLACE
+// ============================================================
+
+.add-place-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  background: $green-light;
+  border: 1.5px dashed rgba(0,98,51,0.4);
+  border-radius: $radius-sm;
+  color: $green;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 14px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all 0.18s ease;
+
+  ion-icon { font-size: 18px; }
+
+  &.active {
+    background: #FFF3F3;
+    border-color: #EF4444;
+    color: #EF4444;
+  }
+
+  &:active { opacity: 0.8; }
+}
+
+.add-place-panel {
+  margin-top: 10px;
+  background: $white;
+  border: 1.5px solid $border;
+  border-radius: $radius-sm;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid $border;
+
+  ion-icon {
+    font-size: 18px;
+    color: $text-secondary;
+    flex-shrink: 0;
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: $text-primary;
+    background: transparent;
+
+    &::placeholder { color: #9CA3AF; }
+  }
+}
+
+.search-results {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid #F3F4F6;
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:last-child { border-bottom: none; }
+  &:active { background: $green-light; }
+
+  .result-emoji {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .result-info {
+    flex: 1;
+    min-width: 0;
+
+    .result-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-primary;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .result-meta-row {
+      font-size: 11px;
+      color: $text-secondary;
+      margin-top: 2px;
+    }
+  }
+
+  .result-add-icon {
+    font-size: 20px;
+    color: $green;
+    flex-shrink: 0;
+  }
+}
+
+.search-empty {
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: $text-secondary;
+}
+
+// ============================================================
+// DAY EXTRAS
+// ============================================================
+
+.day-extras {
+  background: #F8FAFC;
+  border-radius: $radius-sm;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.extra-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+
+  .extra-icon { font-size: 18px; flex-shrink: 0; padding-top: 1px; }
+
+  .extra-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .extra-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: $text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .extra-text {
+      font-size: 13px;
+      color: $text-primary;
+      line-height: 1.5;
+    }
+  }
+}
+
+// ============================================================
+// RESULT ACTIONS
+// ============================================================
+
+.result-actions {
+  padding: 8px 16px 0;
+
+  .btn-reset {
+    --border-color: #{$green};
+    --color: #{$green};
+    --border-radius: 12px;
+    height: 50px;
+    font-weight: 600;
+  }
+}
+
+// ============================================================
+// CHAT IA
+// ============================================================
+
+.chat-section {
+  margin: 20px 16px 0;
+  background: $white;
+  border-radius: $radius;
+  border: 1.5px solid $border;
+  overflow: hidden;
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    background: $green;
+    color: $white;
+    font-weight: 700;
+    font-size: 15px;
+
+    ion-icon { font-size: 20px; }
+  }
+
+  .chat-messages {
+    padding: 12px 12px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .chat-bubble {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word;
+
+    &.user {
+      align-self: flex-end;
+      background: $green;
+      color: $white;
+      border-bottom-right-radius: 4px;
+    }
+
+    &.assistant {
+      align-self: flex-start;
+      background: $green-light;
+      color: $text-primary;
+      border-bottom-left-radius: 4px;
+    }
+  }
+
+  .chat-empty {
+    padding: 16px;
+    p {
+      font-size: 13px;
+      color: $text-secondary;
+      text-align: center;
+      line-height: 1.5;
+      margin: 0;
+    }
+  }
+
+  .chat-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: $text-secondary;
+
+    ion-spinner { --color: #{$green}; width: 18px; height: 18px; }
+  }
+
+  .chat-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-top: 1px solid $border;
+  }
+
+  .chat-input {
+    flex: 1;
+    height: 42px;
+    border: 1.5px solid $border;
+    border-radius: 21px;
+    padding: 0 16px;
+    font-size: 14px;
+    color: $text-primary;
+    background: #F8FAFC;
+    outline: none;
+
+    &:focus { border-color: $green; }
+    &::placeholder { color: #9CA3AF; }
+  }
+
+  .chat-send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: $green;
+    border: none;
+    color: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    ion-icon { font-size: 18px; }
+
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+  }
+}
+
+// ============================================================
+// SCOPE SELECTOR — Wilaya vs Rayon
+// ============================================================
+
+.scope-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0 20px;
+}
+
+.scope-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: $white;
+  border: 2px solid $border;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+
+  &.selected {
+    border-color: $green;
+    background: $green-light;
+  }
+
+  .scope-icon { font-size: 26px; flex-shrink: 0; }
+
+  .scope-info { flex: 1; }
+  .scope-name { font-weight: 700; font-size: 15px; color: $text-primary; }
+  .scope-desc { font-size: 12px; color: $text-secondary; margin-top: 2px; }
+
+  .scope-check {
+    font-size: 20px;
+    color: $green;
+    flex-shrink: 0;
+  }
+}
+
+// ============================================================
+// RADIUS SECTION
+// ============================================================
+
+.radius-section {
+  margin-top: 4px;
+}
+
+.wilaya-section {
+  margin-top: 4px;
+}
+
+.search-mode-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: $radius-sm;
+  border: 2px solid $border;
+  background: $white;
+  color: $text-secondary;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  ion-icon { font-size: 16px; }
+
+  &.active {
+    border-color: $green;
+    background: $green-light;
+    color: $green;
+  }
+}
+
+.geo-block, .address-block {
+  margin-bottom: 16px;
+}
+
+.locate-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  background: $green;
+  color: $white;
+  border: none;
+  border-radius: $radius;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  ion-icon, ion-spinner { font-size: 20px; }
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.location-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: $green-light;
+  border: 1.5px solid $green;
+  border-radius: $radius-sm;
+  font-size: 14px;
+  font-weight: 600;
+  color: $green;
+
+  .badge-check { font-size: 18px; }
+}
+
+.geo-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #FEF2F2;
+  border: 1.5px solid #FCA5A5;
+  border-radius: $radius-sm;
+  font-size: 13px;
+  color: #DC2626;
+
+  ion-icon { font-size: 16px; }
+}
+
+.address-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: $white;
+  border: 2px solid $border;
+  border-radius: $radius;
+  transition: border-color 0.2s;
+
+  &:focus-within { border-color: $green; }
+
+  .addr-icon { font-size: 18px; color: $text-secondary; flex-shrink: 0; }
+  .addr-spinner { font-size: 18px; color: $green; flex-shrink: 0; }
+}
+
+.address-input {
+  flex: 1;
+  height: 48px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: $text-primary;
+  outline: none;
+
+  &::placeholder { color: #9CA3AF; }
+}
+
+.suggestions-list {
+  margin-top: 6px;
+  background: $white;
+  border: 1.5px solid $border;
+  border-radius: $radius-sm;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid $border;
+  transition: background 0.15s;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: $green-light; }
+
+  ion-icon { font-size: 16px; color: $green; flex-shrink: 0; margin-top: 2px; }
+
+  span { font-size: 13px; color: $text-primary; line-height: 1.4; }
+}
+
+.radius-block {
+  margin-top: 16px;
+  padding: 16px;
+  background: $white;
+  border-radius: $radius;
+  border: 1.5px solid $border;
+}
+
+.radius-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.radius-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.radius-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: $green;
+}
+
+.radius-presets {
+  display: flex;
+  gap: 8px;
+}
+
+.radius-preset-btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: $radius-sm;
+  border: 2px solid $border;
+  background: #F8FAFC;
+  font-size: 13px;
+  font-weight: 700;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &.active {
+    border-color: $green;
+    background: $green-light;
+    color: $green;
+  }
+}
+
+// ============================================================
+// CIRCUIT STRUCTURE INFO
+// ============================================================
+
+.circuit-structure-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 16px;
+  background: $green-light;
+  border-radius: $radius-sm;
+  margin: 0 16px 16px;
+}
+
+.structure-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: $green-mid;
+  font-weight: 600;
+
+  span { font-size: 14px; }
+}

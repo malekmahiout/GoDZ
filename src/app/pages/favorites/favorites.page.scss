@@ -1,0 +1,406 @@
+// ============================================================
+// FAVORITES — Design Épuré
+// ============================================================
+
+.top-banner-wrap {
+  width: 100%;
+  background: #006233;
+  padding-top: var(--ion-safe-area-top, 28px);
+  .top-banner-img { display: block; width: 100%; height: auto; }
+}
+
+ion-toolbar {
+  --background: #FFFFFF;
+  --color: #111827;
+  --padding-top: 0;
+  --ion-safe-area-top: 0px;
+}
+
+// ============================================================
+// BARRE COLLECTIONS
+// ============================================================
+
+.collections-bar {
+  background: #FFFFFF;
+  border-bottom: 1px solid #F0F0F0;
+  padding: 0 16px 8px;
+}
+
+.collections-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-top: 4px;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.col-tab {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #F3F4F6;
+  border: 1.5px solid #E5E7EB;
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  &.active {
+    background: #006233;
+    border-color: #006233;
+    .col-tab-name { color: #ffffff; }
+    .col-tab-count { background: rgba(255,255,255,0.25); color: #fff; }
+  }
+}
+
+.col-tab-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.col-tab-count {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(0,98,51,0.10);
+  color: #006233;
+  padding: 1px 7px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.col-delete-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: 2px;
+  ion-icon { font-size: 14px; color: rgba(255,255,255,0.7); }
+}
+
+ion-content {
+  --background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 0L28 14L14 28L0 14Z' fill='none' stroke='%23006233' stroke-width='0.6' stroke-opacity='0.08'/%3E%3C/svg%3E")
+    0 0 / 28px 28px repeat,
+    #FFFFFF;
+}
+
+// ============================================================
+// ÉTAT VIDE
+// ============================================================
+
+.empty-state {
+  text-align: center;
+  padding: 60px 32px;
+
+  .empty-icon { font-size: 60px; margin-bottom: 16px; }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 10px;
+  }
+
+  p {
+    color: #6B7280;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 24px;
+  }
+}
+
+.explore-btn {
+  background: #006233;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,98,51,0.25);
+  transition: transform 0.2s;
+
+  &:active { transform: scale(0.97); }
+}
+
+// ============================================================
+// LIGNE DE COMPTE
+// ============================================================
+
+.fav-count-row { padding: 12px 16px 4px; }
+
+.fav-count-txt {
+  font-size: 13px;
+  color: #006233;
+  font-weight: 700;
+}
+
+// ============================================================
+// LISTE DES FAVORIS
+// ============================================================
+
+.favorites-list { padding: 0 14px; }
+
+.fav-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #F0F0F0;
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 12px;
+  cursor: pointer;
+  align-items: stretch;
+  transition: transform 0.2s;
+
+  &:active { transform: scale(0.98); }
+
+  .fav-img {
+    width: 90px;
+    min-height: 90px;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+    background: #F3F4F6;
+  }
+
+  .fav-info {
+    padding: 10px 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .fav-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fav-meta {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+  }
+
+  .fav-desc {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 4px 0 0;
+    line-height: 1.4;
+  }
+
+  .fav-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 2px;
+    padding: 6px 4px;
+  }
+
+  .move-fav {
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon { font-size: 18px; color: #6B7280; }
+
+    &:active ion-icon { color: #006233; }
+  }
+
+  .remove-fav {
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon { font-size: 20px; color: #D21034; }
+  }
+}
+
+.wilaya-badge {
+  background: rgba(0,98,51,0.08);
+  color: #004D27;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+  border: 1px solid rgba(0,98,51,0.12);
+}
+
+.star-rating {
+  color: #B8912A;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.review-count { color: #9CA3AF; font-size: 12px; }
+
+// ============================================================
+// COLLECTION PICKER — bottom sheet moderne
+// ============================================================
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+  animation: fadeInBack 0.2s ease;
+}
+
+.collection-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: #FFFFFF;
+  border-radius: 24px 24px 0 0;
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+
+  &.open { transform: translateY(0); }
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: #D1D5DB;
+  border-radius: 2px;
+  margin: 12px auto 0;
+}
+
+.sheet-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #111827;
+  text-align: center;
+  margin: 16px 0 4px;
+  letter-spacing: -0.3px;
+}
+
+.sheet-subtitle {
+  font-size: 13px;
+  color: #6B7280;
+  text-align: center;
+  margin: 0 16px 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sheet-list {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.sheet-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #F9FAFB;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  &.selected {
+    background: #E8F5EE;
+    border-color: #006233;
+
+    .sheet-item-icon ion-icon { color: #006233; }
+    .sheet-item-name { color: #006233; font-weight: 800; }
+  }
+
+  &:active { transform: scale(0.98); }
+}
+
+.sheet-item-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+
+  ion-icon {
+    font-size: 22px;
+    color: #9CA3AF;
+    transition: color 0.18s;
+  }
+}
+
+.sheet-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sheet-item-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  transition: color 0.18s;
+}
+
+.sheet-item-count {
+  font-size: 12px;
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+.sheet-confirm-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 32px);
+  margin: 16px 16px;
+  padding: 16px;
+  background: #006233;
+  color: #FFFFFF;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0,98,51,0.35);
+  transition: transform 0.18s, box-shadow 0.18s;
+
+  ion-icon { font-size: 18px; }
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(0,98,51,0.25);
+  }
+}
+
+@keyframes fadeInBack {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

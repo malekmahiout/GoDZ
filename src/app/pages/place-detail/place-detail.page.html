@@ -1,0 +1,209 @@
+<ion-header class="ion-no-border transparent-header" *ngIf="place">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="overlay-btn back-btn-overlay">
+        <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleFavorite()" class="overlay-btn fav-btn-overlay">
+        <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'"
+                  [style.color]="isFavorite ? '#EF4444' : '#374151'" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="place">
+
+  <!-- ── Image slider ──────────────────────── -->
+  <div class="img-slider">
+    <div class="slides-container"
+         [style.width]="(displayImages.length * 100) + '%'"
+         [style.transform]="'translateX(-' + (currentImageIndex * (100/displayImages.length)) + '%)'">
+      <img *ngFor="let img of displayImages"
+           [src]="img" [alt]="place.nameFr"
+           class="slide-img"
+           [style.width]="(100/displayImages.length) + '%'">
+    </div>
+    <div class="slide-dots" *ngIf="displayImages.length > 1">
+      <span *ngFor="let img of displayImages; let i=index"
+            [class.active]="i === currentImageIndex"
+            (click)="setImage(i)"></span>
+    </div>
+    <button class="slide-prev" (click)="prevImage()" *ngIf="currentImageIndex > 0">‹</button>
+    <button class="slide-next" (click)="nextImage()" *ngIf="currentImageIndex < displayImages.length - 1">›</button>
+  </div>
+
+  <div class="detail-content">
+
+    <!-- ── Titre + badges ───────────────────── -->
+    <div class="detail-header">
+      <h1 class="detail-title">{{ t.getPlaceName(place) }}</h1>
+      <p class="place-name-en" *ngIf="place.nameEn && place.nameEn !== place.nameFr">{{place.nameEn}}</p>
+      <div class="detail-badges">
+        <span class="wilaya-badge">📍 {{t.getWilaya(place.wilaya)}}</span>
+        <span class="category-badge">{{getCategoryEmoji(place.category)}} {{getCategoryLabel(place.category)}}</span>
+        <span class="heritage-badge" *ngIf="place.category === 'monuments'">🏆 {{ 'detail.heritage_badge' | translate }}</span>
+      </div>
+      <p class="opening-hours" *ngIf="place.openingHours">🕐 {{place.openingHours}}</p>
+    </div>
+
+    <!-- ── Note Google ──────────────────────── -->
+    <div class="rating-card">
+      <div class="rating-stars">
+        <span class="big-rating">{{place.googleRating | number:'1.1-1'}}</span>
+        <div>
+          <div class="stars-row">
+            <span *ngFor="let s of getStars(place.googleRating)">⭐</span>
+          </div>
+          <p class="reviews-count">{{place.googleReviewCount | number}} {{ 'detail.google_reviews' | translate }}</p>
+        </div>
+      </div>
+      <button class="gmaps-btn" (click)="openGoogleMaps()">📍 {{ 'detail.see_maps' | translate }}</button>
+    </div>
+
+    <!-- ── Guide audio (monuments only) ────── -->
+    <div class="audio-section" *ngIf="place.category === 'monuments'">
+      <div class="audio-inner">
+        <div class="audio-icon" [class.playing]="isAudioPlaying">
+          <ion-icon [name]="isAudioPlaying ? 'volume-high' : 'headset'"></ion-icon>
+        </div>
+        <div class="audio-text">
+          <p class="audio-title">{{ 'detail.audio_guide' | translate }}</p>
+          <p class="audio-sub">{{ isAudioPlaying ? ('detail.audio_playing' | translate) : ('detail.audio_listen' | translate) }}</p>
+        </div>
+        <button class="audio-play-btn" (click)="toggleAudioGuide()">
+          <ion-icon [name]="isAudioPlaying ? 'stop-circle' : 'play-circle'"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Indicateur de traduction ──────────── -->
+    <div class="translating-bar" *ngIf="isTranslating">
+      <ion-spinner name="dots" class="tr-spinner"></ion-spinner>
+      <span>{{ 'detail.translating' | translate }}</span>
+    </div>
+
+    <!-- ── Histoire & Patrimoine (monuments) ─ -->
+    <div class="section-card" *ngIf="place.category === 'monuments'">
+      <div class="section-card-header">
+        <span class="section-icon">📜</span>
+        <h3>{{ 'detail.heritage_title' | translate }}</h3>
+      </div>
+      <p class="desc-text" [class.rtl-text]="descriptionLanguage === 'ar'">
+        {{getShortDescription()}}
+      </p>
+      <button class="expand-btn" *ngIf="getCurrentDescription().length > 280 && !descExpanded"
+              (click)="descExpanded = true">{{ 'detail.read_more' | translate }} ↓</button>
+      <button class="expand-btn" *ngIf="descExpanded"
+              (click)="descExpanded = false">{{ 'detail.read_less' | translate }} ↑</button>
+      <div class="wiki-source" *ngIf="wikiDescriptions['fr'] || wikiDescriptions['en']">
+        <span>{{ 'detail.wiki_source' | translate }}</span>
+        <button (click)="openWikipedia()">{{ 'detail.wiki_open' | translate }} →</button>
+      </div>
+    </div>
+
+    <!-- ── À propos (autres catégories) ────── -->
+    <div class="section-card" *ngIf="place.category !== 'monuments'">
+      <div class="section-card-header">
+        <span class="section-icon">{{getCategoryEmoji(place.category)}}</span>
+        <h3>{{ 'detail.about_title' | translate }}</h3>
+      </div>
+      <p class="desc-text" [class.rtl-text]="descriptionLanguage === 'ar'">
+        {{getShortDescription()}}
+      </p>
+      <button class="expand-btn" *ngIf="getCurrentDescription().length > 280 && !descExpanded"
+              (click)="descExpanded = true">{{ 'detail.read_more' | translate }} ↓</button>
+      <button class="expand-btn" *ngIf="descExpanded"
+              (click)="descExpanded = false">{{ 'detail.read_less' | translate }} ↑</button>
+    </div>
+
+    <!-- ── Infos pratiques ──────────────────── -->
+    <div class="section-card info-card" *ngIf="place.category === 'monuments'">
+      <div class="section-card-header">
+        <span class="section-icon">ℹ️</span>
+        <h3>{{ 'detail.practical_info' | translate }}</h3>
+      </div>
+      <div class="info-row" *ngIf="place.openingHours">
+        <span class="info-label">🕐 {{ 'detail.schedule' | translate }}</span>
+        <span class="info-value">{{place.openingHours}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">📍 {{ 'detail.wilaya' | translate }}</span>
+        <span class="info-value">{{t.getWilaya(place.wilaya)}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">🗺️ {{ 'detail.coordinates' | translate }}</span>
+        <span class="info-value">{{place.latitude | number:'1.4-4'}}, {{place.longitude | number:'1.4-4'}}</span>
+      </div>
+      <button class="info-maps-btn" (click)="openGoogleMaps()">
+        <ion-icon name="navigate-outline"></ion-icon> {{ 'detail.gmaps_directions' | translate }}
+      </button>
+    </div>
+
+    <!-- ── Avis visiteurs ───────────────────── -->
+    <div class="section-card" *ngIf="reviews.length > 0">
+      <div class="section-card-header">
+        <span class="section-icon">💬</span>
+        <h3>{{ 'detail.visitor_reviews' | translate }}</h3>
+      </div>
+      <div class="review-card" *ngFor="let review of reviews; let i = index">
+        <div class="review-header">
+          <div class="reviewer-avatar">
+            <img *ngIf="review.profilePhoto" [src]="review.profilePhoto" [alt]="review.authorName">
+            <span *ngIf="!review.profilePhoto">{{review.authorName.charAt(0)}}</span>
+          </div>
+          <div class="reviewer-info">
+            <p class="reviewer-name">{{review.authorName}}</p>
+            <div class="review-stars">
+              <span *ngFor="let s of getRatingStars(review.rating).full">⭐</span>
+            </div>
+          </div>
+          <span class="review-date">{{review.date | date:'MMM yyyy'}}</span>
+        </div>
+        <p class="review-text" [class.rtl-text]="descriptionLanguage === 'ar'">{{ getReviewText(i) }}</p>
+      </div>
+    </div>
+
+    <div style="height: 30px"></div>
+  </div>
+</ion-content>
+
+<!-- ── Collection picker bottom sheet ── -->
+<div class="sheet-backdrop" *ngIf="showCollectionSheet" (click)="showCollectionSheet = false"></div>
+<div class="collection-sheet" [class.open]="showCollectionSheet">
+  <div class="sheet-handle"></div>
+  <h3 class="sheet-title">{{ 'favorites.add_to_collection' | translate }}</h3>
+  <div class="sheet-list">
+    <div class="sheet-item sheet-item-new" (click)="createCollectionFromSheet()">
+      <div class="sheet-item-icon"><ion-icon name="add-circle-outline"></ion-icon></div>
+      <div class="sheet-item-info">
+        <span class="sheet-item-name">{{ 'favorites.new_collection' | translate }}</span>
+      </div>
+    </div>
+    <div class="sheet-item"
+         *ngFor="let col of collectionPickList"
+         [class.selected]="selectedCollectionId === col.id"
+         (click)="selectedCollectionId = col.id">
+      <div class="sheet-item-icon">
+        <ion-icon [name]="selectedCollectionId === col.id ? 'checkmark-circle' : 'folder-outline'"></ion-icon>
+      </div>
+      <div class="sheet-item-info">
+        <span class="sheet-item-name">{{ col.name }}</span>
+        <span class="sheet-item-count">{{ col.placeIds.length }} {{ 'home.lieux' | translate }}</span>
+      </div>
+    </div>
+  </div>
+  <button class="sheet-confirm-btn" (click)="confirmAddToCollection()">
+    <ion-icon name="heart"></ion-icon>
+    {{ 'detail.add_favorite' | translate }}
+  </button>
+</div>
+
+<ion-content *ngIf="!place" class="loading-content">
+  <div class="loading-wrap">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>{{ 'common.loading' | translate }}</p>
+  </div>
+</ion-content>

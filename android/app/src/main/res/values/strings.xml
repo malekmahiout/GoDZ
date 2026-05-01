@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GoDZ</string>
+    <string name="title_activity_main">GoDZ</string>
+    <string name="package_name">dz.godz_mobile.app</string>
+    <string name="custom_url_scheme">dz.godz_mobile.app</string>
+</resources>

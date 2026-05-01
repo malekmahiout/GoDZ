@@ -1,0 +1,86 @@
+<ion-header class="ion-no-border">
+  <div class="top-banner-wrap">
+    <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
+  </div>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/categories" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span class="catlist-header-title">
+        {{getCategoryEmoji()}} {{getCategoryTitle()}}
+      </span>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-badge class="count-badge" *ngIf="!isLoading">{{places.length}}</ion-badge>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Sort Options -->
+  <div class="sort-row" *ngIf="!isLoading && places.length > 0">
+    <button class="sort-btn" [class.active]="sortBy === 'popularity'" (click)="setSortBy('popularity')">
+      🔥 Popularité
+    </button>
+    <button class="sort-btn" [class.active]="sortBy === 'rating'" (click)="setSortBy('rating')">
+      ⭐ Note
+    </button>
+    <button class="sort-btn" [class.active]="sortBy === 'name'" (click)="setSortBy('name')">
+      🔤 Nom
+    </button>
+  </div>
+
+  <!-- Wilaya chips -->
+  <div class="wilaya-chips-row" *ngIf="!isLoading && places.length > 0">
+    <button class="wcl-chip" [class.active]="!selectedWilaya"
+            (click)="selectedWilaya=null; applySort()">🌍 Toutes</button>
+    <button class="wcl-chip" *ngFor="let w of wilayas"
+            [class.active]="selectedWilaya === w"
+            (click)="selectWilaya(w)">{{t.getWilaya(w)}}</button>
+  </div>
+</ion-header>
+
+<ion-content>
+
+  <!-- Loading -->
+  <div class="loading-wrap" *ngIf="isLoading">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="!isLoading && places.length === 0">
+    <div class="empty-emoji">🔍</div>
+    <h3>Aucun lieu trouvé</h3>
+    <p>Il n'y a pas encore de lieux dans cette catégorie.</p>
+  </div>
+
+  <!-- Places list -->
+  <div class="catlist-places" *ngIf="!isLoading && places.length > 0">
+    <div class="catlist-item animate-in"
+         *ngFor="let place of sortedPlaces; let i = index"
+         [style.animation-delay]="(i * 40) + 'ms'"
+         (click)="goToDetail(place)">
+
+      <div class="catlist-img-wrap">
+        <img [placePhoto]="place" [alt]="t.getPlaceName(place)" class="catlist-img">
+        <div class="catlist-featured-badge" *ngIf="place.isFeatured">⭐</div>
+      </div>
+
+      <div class="catlist-body">
+        <div class="catlist-wilaya-row">
+          <span class="wilaya-badge">{{t.getWilaya(place.wilaya)}}</span>
+        </div>
+        <h3 class="catlist-name">{{ t.getPlaceName(place) }}</h3>
+        <div class="catlist-rating">
+          <span class="star-rating">⭐ {{place.googleRating | number:'1.1-1'}}</span>
+          <span class="review-count"> · {{place.googleReviewCount | number}} {{ 'detail.reviews' | translate }}</span>
+        </div>
+        <p class="catlist-desc">{{ t.getPlaceDescription(place).slice(0, 80) }}...</p>
+      </div>
+
+      <ion-icon name="chevron-forward-outline" class="catlist-arrow"></ion-icon>
+    </div>
+  </div>
+
+  <div style="height: 24px"></div>
+</ion-content>

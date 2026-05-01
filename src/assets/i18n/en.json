@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "GoDZ – Discover Algeria",
+    "subtitle": "Discover Algeria"
+  },
+  "tab": {
+    "home": "Home",
+    "categories": "Categories",
+    "map": "Map",
+    "favorites": "Favorites"
+  },
+  "home": {
+    "featured": "Featured Places",
+    "top_visited": "Most Visited",
+    "hero_title": "Discover Algeria",
+    "hero_subtitle": "A country of a thousand faces"
+  },
+  "categories": {
+    "title": "Categories"
+  },
+  "cat": {
+    "monuments": "Monuments",
+    "culture": "Culture",
+    "loisirs": "Leisure",
+    "plages": "Beaches",
+    "montagnes": "Mountains",
+    "desert": "Desert",
+    "restaurants": "Restaurants",
+    "salons": "Tea Rooms"
+  },
+  "map": {
+    "title": "Map",
+    "select_wilaya": "Select a wilaya",
+    "radius": "Radius",
+    "my_location": "My Location",
+    "nearby": "Nearby Places"
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "empty": "No favorites yet",
+    "empty_sub": "Add places by tapping the heart icon"
+  },
+  "detail": {
+    "reviews": "Reviews",
+    "see_reviews": "See reviews",
+    "audio_guide": "Audio Guide",
+    "audio_stop": "Stop",
+    "add_favorite": "Add to favorites",
+    "remove_favorite": "Remove from favorites",
+    "opening_hours": "Opening Hours",
+    "address": "Address",
+    "rating": "Rating"
+  },
+  "common": {
+    "km": "km",
+    "back": "Back",
+    "loading": "Loading...",
+    "search": "Search",
+    "all": "All"
+  }
+}

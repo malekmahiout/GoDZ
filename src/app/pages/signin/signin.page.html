@@ -1,0 +1,99 @@
+<ion-content class="signin-content" [fullscreen]="true">
+
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+
+  <div class="signin-wrapper">
+
+    <!-- Logo -->
+    <div class="brand-section">
+      <div class="logo-container">
+        <span class="logo-text">Go<span class="logo-dz">DZ</span></span>
+      </div>
+      <p class="brand-tagline">Explorez l'Algérie autrement</p>
+    </div>
+
+    <!-- Image Banner -->
+    <div class="signin-banner">
+      <img
+        src="assets/photos/decouvrez_algerie.jpg"
+        alt="Algérie"
+        class="banner-img">
+      <div class="banner-overlay">
+        <div class="banner-badges">
+          <span class="banner-badge">🏜️ Sahara</span>
+          <span class="banner-badge">🏖️ Méditerranée</span>
+          <span class="banner-badge">🏔️ Kabylie</span>
+        </div>
+        <p class="banner-quote">"58 wilayas · des milliers d'expériences"</p>
+      </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="form-card">
+      <h2 class="form-title">Connexion</h2>
+      <p class="form-subtitle">Bienvenue ! Connectez-vous pour continuer.</p>
+
+      <div class="input-group">
+        <label class="input-label">Email</label>
+        <div class="input-wrap">
+          <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+          <input
+            type="email"
+            class="custom-input"
+            placeholder="votre@email.com"
+            [(ngModel)]="email">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="label-row">
+          <label class="input-label">Mot de passe</label>
+          <a class="forgot-link">Oublié ?</a>
+        </div>
+        <div class="input-wrap">
+          <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            class="custom-input"
+            placeholder="••••••••"
+            [(ngModel)]="password">
+          <ion-icon
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+            class="input-icon-right"
+            (click)="togglePassword()">
+          </ion-icon>
+        </div>
+      </div>
+
+      <button class="signin-btn" (click)="signIn()">
+        <span>Se connecter</span>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </button>
+
+      <div class="divider">
+        <span class="divider-line"></span>
+        <span class="divider-text">ou continuer avec</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <div class="social-row">
+        <button class="social-btn">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="social-img">
+          <span>Google</span>
+        </button>
+        <button class="social-btn">
+          <ion-icon name="logo-apple" class="social-icon-apple"></ion-icon>
+          <span>Apple</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sign Up Footer -->
+    <div class="signup-footer">
+      <span>Pas encore de compte ?</span>
+      <a class="signup-link">S'inscrire</a>
+    </div>
+
+  </div>
+</ion-content>

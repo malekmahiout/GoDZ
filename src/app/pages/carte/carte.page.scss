@@ -1,0 +1,495 @@
+// ============================================================
+// CARTE PAGE
+// ============================================================
+
+.top-banner-wrap {
+  width: 100%;
+  background: #006233;
+  padding-top: var(--ion-safe-area-top, 28px);
+  .top-banner-img { display: block; width: 100%; height: auto; }
+}
+
+ion-toolbar {
+  --background: #006233;
+  --color: #ffffff;
+  --padding-top: 0;
+  --ion-safe-area-top: 0px;
+}
+
+.carte-content {
+  --padding-bottom: 0;
+}
+
+// ============================================================
+// LAYOUT PRINCIPAL
+// ============================================================
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+// ============================================================
+// BARRE DE RECHERCHE — toujours visible en haut
+// ============================================================
+
+.search-bar {
+  background: #FFFFFF;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E5E7EB;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  z-index: 10;
+}
+
+// Onglets Géoloc / Adresse
+.mode-tabs {
+  display: flex;
+  gap: 8px;
+  background: #F3F4F6;
+  border-radius: 14px;
+  padding: 4px;
+}
+
+.mode-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #6B7280;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  ion-icon { font-size: 16px; }
+
+  &.active {
+    background: #FFFFFF;
+    color: #006233;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+
+    ion-icon { color: #006233; }
+  }
+}
+
+// Ligne saisie adresse
+.address-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.address-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 0 12px;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: #006233;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(0,98,51,0.08);
+  }
+
+  .input-icon {
+    font-size: 18px;
+    color: #9CA3AF;
+    flex-shrink: 0;
+  }
+}
+
+.address-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #111827;
+  padding: 12px 0;
+
+  &::placeholder { color: #9CA3AF; }
+}
+
+.address-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  flex-shrink: 0;
+  color: #9CA3AF;
+  cursor: pointer;
+
+  ion-icon { font-size: 18px; }
+  &:active ion-icon { color: #6B7280; }
+}
+
+.search-action-btn {
+  width: 46px;
+  height: 46px;
+  background: #006233;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,98,51,0.35);
+  transition: transform 0.18s;
+
+  ion-icon { font-size: 20px; }
+
+  &:active { transform: scale(0.94); }
+  &:disabled { opacity: 0.55; }
+}
+
+// Sélecteur de périmètre
+.radius-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radius-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.radius-presets {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+
+.radius-btn {
+  flex: 1;
+  padding: 6px 0;
+  border-radius: 10px;
+  border: 1.5px solid #E5E7EB;
+  background: #F9FAFB;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  &.active {
+    background: #006233;
+    border-color: #006233;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,98,51,0.30);
+  }
+
+  &:active { transform: scale(0.94); }
+}
+
+// Bouton géolocalisation pleine largeur
+.geo-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px;
+  background: #006233;
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0,98,51,0.30);
+  transition: transform 0.18s, box-shadow 0.18s;
+
+  ion-icon { font-size: 18px; }
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 6px rgba(0,98,51,0.20);
+  }
+  &:disabled { opacity: 0.6; }
+}
+
+// Suggestions autocomplete
+.suggestions-list {
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:not(:last-child) { border-bottom: 1px solid #F3F4F6; }
+  &:active { background: #F3F4F6; }
+
+  .sug-icon {
+    font-size: 15px;
+    color: #006233;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .sug-text {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.4;
+  }
+}
+
+// Message d'erreur
+.geocode-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-radius: 10px;
+
+  ion-icon { font-size: 16px; flex-shrink: 0; }
+}
+
+// ── Barre compacte quand résultats actifs ──────────────────
+
+.search-bar-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #006233;
+  padding: 10px 16px;
+  flex-shrink: 0;
+  z-index: 10;
+
+  .compact-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+
+    ion-icon { font-size: 16px; }
+    strong { font-weight: 800; }
+  }
+
+  .compact-close {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+
+    ion-icon { font-size: 14px; }
+    &:active { background: rgba(255,255,255,0.25); }
+  }
+}
+
+// ============================================================
+// CARTE LEAFLET
+// ============================================================
+
+.map-half {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  transition: flex 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .page-wrapper.geo-active & { flex: 0 0 45%; }
+
+  #leaflet-map {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// ============================================================
+// PANNEAU LIEUX PROCHES
+// ============================================================
+
+.nearby-panel {
+  flex: 0 0 0;
+  overflow: hidden;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  transition: flex 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top: 2px solid #E5E7EB;
+
+  &.open { flex: 0 0 55%; }
+}
+
+.panel-drag-bar {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #D1D5DB;
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+// Filtres catégorie
+.nearby-cat-filters {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+  border-bottom: 1px solid #F3F4F6;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.nearby-cat-btn {
+  flex-shrink: 0;
+  background: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
+  color: #374151;
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+
+  &.active {
+    background: #006233;
+    color: #FFFFFF;
+    border-color: #006233;
+    box-shadow: 0 2px 8px rgba(0,98,51,0.25);
+  }
+}
+
+// Liste
+.nearby-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 12px 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nearby-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: #9CA3AF;
+  text-align: center;
+
+  ion-icon { font-size: 32px; }
+  p { font-size: 13px; margin: 0; }
+}
+
+.nearby-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:active { background: #F3F4F6; }
+  &:not(:last-child) { border-bottom: 1px solid #F3F4F6; }
+
+  .nearby-card-emoji {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #F8FAFC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    border: 1px solid #E5E7EB;
+  }
+
+  .nearby-card-info {
+    flex: 1;
+    min-width: 0;
+
+    .nearby-card-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nearby-card-meta {
+      font-size: 12px;
+      color: #6B7280;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .nearby-dot { color: #D1D5DB; }
+    }
+  }
+
+  .nearby-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+
+    .nearby-distance { font-size: 12px; font-weight: 700; color: #006233; }
+    .nearby-chevron { font-size: 14px; color: #9CA3AF; }
+  }
+}
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%       { transform: scale(1.8); opacity: 0; }
+}
+
+.spin { animation: spin 0.8s linear infinite; }

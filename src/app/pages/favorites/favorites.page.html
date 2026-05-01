@@ -1,0 +1,104 @@
+<ion-header class="ion-no-border">
+  <div class="top-banner-wrap">
+    <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
+  </div>
+  <ion-toolbar>
+    <ion-title>{{ 'favorites.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="createCollection()" title="{{ 'favorites.new_collection' | translate }}">
+        <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="medium" (click)="clearCollection()" *ngIf="displayPlaces.length > 0">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Onglets collections -->
+  <div class="collections-bar" *ngIf="collections.length > 1">
+    <div class="collections-scroll">
+      <div class="col-tab"
+           *ngFor="let col of collections"
+           [class.active]="activeCollectionId === col.id"
+           (click)="selectCollection(col.id)">
+        <span class="col-tab-name">{{ col.name }}</span>
+        <span class="col-tab-count">{{ col.placeIds.length }}</span>
+        <button class="col-delete-btn" *ngIf="col.id !== 'default'"
+                (click)="deleteCollection(col, $event)">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="displayPlaces.length === 0">
+    <div class="empty-icon">🏛️</div>
+    <h3>{{ 'favorites.empty' | translate }}</h3>
+    <p>{{ 'favorites.empty_sub' | translate }}</p>
+    <button class="explore-btn" [routerLink]="['/tabs/map']">🌍 {{ 'tab.explore' | translate }}</button>
+  </div>
+
+  <!-- Favorites list -->
+  <div class="favorites-list" *ngIf="displayPlaces.length > 0">
+    <div class="fav-count-row">
+      <span class="fav-count-txt">
+        {{ displayPlaces.length }} {{ 'home.lieux' | translate }}
+      </span>
+    </div>
+
+    <div class="fav-card" *ngFor="let place of displayPlaces" (click)="goToDetail(place)">
+      <img [placePhoto]="place" [alt]="t.getPlaceName(place)" class="fav-img">
+      <div class="fav-info">
+        <p class="fav-name">{{ t.getPlaceName(place) }}</p>
+        <span class="wilaya-badge">{{t.getWilaya(place.wilaya)}}</span>
+        <div class="fav-meta">
+          <span class="star-rating">⭐ {{place.googleRating | number:'1.1-1'}}</span>
+          <span class="review-count"> · {{place.googleReviewCount | number}} {{ 'detail.reviews' | translate }}</span>
+        </div>
+        <p class="fav-desc">{{ t.getPlaceDescription(place).slice(0, 65) }}...</p>
+      </div>
+      <div class="fav-actions">
+        <button class="move-fav" *ngIf="collections.length > 1"
+                (click)="openMoveSheet(place, $event)"
+                [title]="'favorites.move_to' | translate">
+          <ion-icon name="folder-outline"></ion-icon>
+        </button>
+        <button class="remove-fav" (click)="removeFavorite(place, $event)">
+          <ion-icon name="heart" color="danger"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 20px"></div>
+</ion-content>
+
+<!-- ── Move to collection bottom sheet ── -->
+<div class="sheet-backdrop" *ngIf="showMoveSheet" (click)="showMoveSheet = false"></div>
+<div class="collection-sheet" [class.open]="showMoveSheet">
+  <div class="sheet-handle"></div>
+  <h3 class="sheet-title">{{ 'favorites.move_to' | translate }}</h3>
+  <p class="sheet-subtitle" *ngIf="movingPlace">{{ t.getPlaceName(movingPlace) }}</p>
+  <div class="sheet-list">
+    <div class="sheet-item"
+         *ngFor="let col of moveTargetCollections"
+         [class.selected]="moveTargetId === col.id"
+         (click)="moveTargetId = col.id">
+      <div class="sheet-item-icon">
+        <ion-icon [name]="moveTargetId === col.id ? 'checkmark-circle' : 'folder-outline'"></ion-icon>
+      </div>
+      <div class="sheet-item-info">
+        <span class="sheet-item-name">{{ col.name }}</span>
+        <span class="sheet-item-count">{{ col.placeIds.length }} {{ 'home.lieux' | translate }}</span>
+      </div>
+    </div>
+  </div>
+  <button class="sheet-confirm-btn" (click)="confirmMove()">
+    <ion-icon name="arrow-forward-circle"></ion-icon>
+    {{ 'favorites.move_to' | translate }}
+  </button>
+</div>

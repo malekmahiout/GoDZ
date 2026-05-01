@@ -1,0 +1,105 @@
+// ============================================================
+// CATEGORIES PAGE — Design Premium
+// ============================================================
+
+.top-banner-wrap {
+  width: 100%;
+  background: #006233;
+  padding-top: var(--ion-safe-area-top, 28px);
+  .top-banner-img { display: block; width: 100%; height: auto; }
+}
+
+ion-toolbar {
+  --background: #FFFFFF;
+  --color: #111827;
+  --padding-top: 0;
+  --ion-safe-area-top: 0px;
+  box-shadow: 0 1px 0 #F0F0F0;
+
+  ion-title {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+  }
+}
+
+ion-content {
+  --background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 0L28 14L14 28L0 14Z' fill='none' stroke='%23006233' stroke-width='0.6' stroke-opacity='0.08'/%3E%3C/svg%3E")
+    0 0 / 28px 28px repeat,
+    #FFFFFF;
+}
+
+.page-intro {
+  padding: 22px 16px 8px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #111827;
+    margin: 0 0 4px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  p { color: #6B7280; font-size: 14px; margin: 6px 0 0; }
+}
+
+// ============================================================
+// GRILLE CATÉGORIES
+// ============================================================
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  padding: 16px 16px 32px;
+}
+
+.cat-item {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px 14px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 8px 24px rgba(0,0,0,0.06);
+  border: 1px solid #F0F0F0;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .cat-icon-wrap {
+    width: 66px;
+    height: 66px;
+    border-radius: 20px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .cat-emoji { font-size: 30px; }
+
+  .cat-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 5px;
+    line-height: 1.2;
+    letter-spacing: -0.1px;
+  }
+
+  .cat-count {
+    font-size: 12px;
+    color: #006233;
+    font-weight: 600;
+    background: rgba(0,98,51,0.08);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+}

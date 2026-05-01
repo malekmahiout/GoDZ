@@ -1,0 +1,61 @@
+<ion-header class="ion-no-border">
+  <div class="top-banner-wrap">
+    <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
+  </div>
+</ion-header>
+
+<ion-content>
+
+  <!-- Sélecteur de langue -->
+  <div class="lang-bar">
+    <button *ngFor="let lang of getAvailableLanguages()"
+            class="lang-pill"
+            [class.active]="getCurrentLanguage() === lang.code"
+            (click)="setLanguage(lang.code)"
+            [title]="lang.label">
+      <span class="lang-flag">{{lang.flag}}</span>
+      <span class="lang-code">{{lang.code | uppercase}}</span>
+    </button>
+  </div>
+
+  <!-- Hero Banner — image unique par langue -->
+  <div class="hero-banner">
+    <img [src]="heroImage" (error)="onHeroError($event)" class="hero-img" alt="Algeria">
+  </div>
+
+  <!-- À la Une — scroll horizontal étendu -->
+  <div class="section-header">
+    <h2>{{ 'home.featured_section' | translate }}</h2>
+    <a (click)="navigateToMap()">{{ 'home.view_all' | translate }}</a>
+  </div>
+  <div class="top-places-scroll">
+    <div class="top-card" *ngFor="let place of featuredPlaces; let i=index" (click)="navigateToPlace(place.id)">
+      <div class="top-card-img-wrap">
+        <img [placePhoto]="place" [alt]="t.getPlaceName(place)" class="top-card-img">
+        <span class="top-rank">{{i + 1}}</span>
+        <div class="top-card-gradient"></div>
+        <span class="top-wilaya-badge">{{t.getWilaya(place.wilaya)}}</span>
+      </div>
+      <div class="top-card-info">
+        <p class="top-card-name">{{ t.getPlaceName(place) }}</p>
+        <span class="star-rating">⭐ {{place.googleRating}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Explorer par Wilaya -->
+  <div class="section-header">
+    <h2>{{ 'home.explore_wilaya' | translate }}</h2>
+  </div>
+  <div class="wilayas-grid">
+    <div class="wilaya-card" *ngFor="let w of popularWilayas" (click)="navigateToWilaya(w.name)">
+      <img [src]="w.image" [alt]="w.name" class="wilaya-img">
+      <div class="wilaya-overlay">
+        <p class="wilaya-name">{{t.getWilaya(w.name)}}</p>
+        <span class="wilaya-count">{{w.count}} {{ 'home.lieux' | translate }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 20px"></div>
+</ion-content>

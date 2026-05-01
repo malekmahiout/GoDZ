@@ -1,0 +1,162 @@
+<ion-header class="ion-no-border">
+  <div class="top-banner-wrap">
+    <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
+  </div>
+  <ion-toolbar>
+    <ion-title>{{ 'carte.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="carte-content">
+  <div class="page-wrapper" [class.geo-active]="geoMode">
+
+    <!-- ══════════════════════════════════════════
+         BARRE DE RECHERCHE — toujours visible
+    ══════════════════════════════════════════ -->
+    <div class="search-bar" *ngIf="!geoMode">
+
+      <!-- Onglets mode -->
+      <div class="mode-tabs">
+        <button class="mode-tab"
+                [class.active]="searchMode === 'geo'"
+                (click)="searchMode = 'geo'">
+          <ion-icon name="navigate-circle-outline"></ion-icon>
+          {{ 'carte.geo_mode' | translate }}
+        </button>
+        <button class="mode-tab"
+                [class.active]="searchMode === 'address'"
+                (click)="searchMode = 'address'">
+          <ion-icon name="search-outline"></ion-icon>
+          {{ 'carte.address_mode' | translate }}
+        </button>
+      </div>
+
+      <!-- Mode Adresse : champ + bouton + autocomplete -->
+      <div class="address-row" *ngIf="searchMode === 'address'">
+        <div class="address-input-wrap">
+          <ion-icon name="location-outline" class="input-icon"></ion-icon>
+          <input class="address-input"
+                 [value]="addressInput"
+                 [placeholder]="'carte.address_placeholder' | translate"
+                 (input)="onAddressInput($any($event.target).value)"
+                 (blur)="closeSuggestions()"
+                 (keyup.enter)="searchByAddress()" />
+          <button class="address-clear-btn" *ngIf="addressInput"
+                  (mousedown)="$event.preventDefault()"
+                  (click)="addressInput = ''; suggestions = []; showSuggestions = false">
+            <ion-icon name="close-circle"></ion-icon>
+          </button>
+        </div>
+        <button class="search-action-btn" (click)="searchByAddress()" [disabled]="geocoding">
+          <ion-icon [name]="geocoding ? 'refresh-outline' : 'arrow-forward-outline'"
+                    [class.spin]="geocoding"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Suggestions autocomplete -->
+      <div class="suggestions-list" *ngIf="showSuggestions && suggestions.length > 0">
+        <div class="suggestion-item"
+             *ngFor="let s of suggestions"
+             (mousedown)="selectSuggestion(s)">
+          <ion-icon name="location-outline" class="sug-icon"></ion-icon>
+          <span class="sug-text">{{ s.display_name }}</span>
+        </div>
+      </div>
+
+      <!-- Sélecteur de périmètre -->
+      <div class="radius-row">
+        <span class="radius-label">{{ 'carte.radius_control' | translate }}</span>
+        <div class="radius-presets">
+          <button class="radius-btn"
+                  *ngFor="let r of radiusPresets"
+                  [class.active]="radiusKm === r"
+                  (click)="radiusKm = r">
+            {{ r }} {{ 'common.km' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Mode Géolocalisation : bouton pleine largeur -->
+      <button class="geo-action-btn" *ngIf="searchMode === 'geo'"
+              (click)="locateByGPS()" [disabled]="locating">
+        <ion-icon [name]="locating ? 'refresh-outline' : 'navigate-outline'"
+                  [class.spin]="locating"></ion-icon>
+        {{ locating ? ('common.loading' | translate) : ('carte.locate_btn' | translate) }}
+      </button>
+
+      <!-- Erreur géocodage -->
+      <div class="geocode-error" *ngIf="geocodeError">
+        <ion-icon name="warning-outline"></ion-icon>
+        {{ 'carte.geocode_error' | translate }}
+      </div>
+
+    </div>
+
+    <!-- Barre compacte quand résultats affichés -->
+    <div class="search-bar-compact" *ngIf="geoMode">
+      <div class="compact-info">
+        <ion-icon name="radio-outline"></ion-icon>
+        <span>{{ nearbyPlaces.length }} {{ 'home.lieux' | translate }} · {{ 'carte.radius_label' | translate }} <strong>{{ radiusKm }} {{ 'common.km' | translate }}</strong></span>
+      </div>
+      <button class="compact-close" (click)="closeSplit()">
+        <ion-icon name="close-outline"></ion-icon>
+        {{ 'common.back' | translate }}
+      </button>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CARTE LEAFLET
+    ══════════════════════════════════════════ -->
+    <div class="map-half">
+      <div id="leaflet-map"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PANNEAU LIEUX PROCHES (slide-up)
+    ══════════════════════════════════════════ -->
+    <div class="nearby-panel" [class.open]="geoMode">
+      <div class="panel-drag-bar"></div>
+
+      <!-- Filtres catégorie -->
+      <div class="nearby-cat-filters">
+        <button class="nearby-cat-btn"
+                [class.active]="selectedNearbyCategory === 'all'"
+                (click)="setNearbyCategory('all')">
+          🌍 {{ 'cat.all' | translate }}
+        </button>
+        <button class="nearby-cat-btn"
+                *ngFor="let f of nearbyFilters"
+                [class.active]="selectedNearbyCategory === f.id"
+                (click)="setNearbyCategory(f.id)">
+          {{ f.emoji }} {{ 'cat.' + f.id | translate }}
+        </button>
+      </div>
+
+      <div class="nearby-list">
+        <div class="nearby-empty" *ngIf="filteredNearbyPlaces.length === 0">
+          <ion-icon name="map-outline"></ion-icon>
+          <p>{{ 'carte.no_nearby' | translate }}</p>
+        </div>
+
+        <div class="nearby-card"
+             *ngFor="let place of filteredNearbyPlaces"
+             (click)="goToPlace(place.id)">
+          <div class="nearby-card-emoji">{{ getCategoryEmoji(place.category) }}</div>
+          <div class="nearby-card-info">
+            <p class="nearby-card-name">{{ t.getPlaceName(place) }}</p>
+            <p class="nearby-card-meta">
+              <span class="nearby-wilaya">{{ t.getWilaya(place.wilaya) }}</span>
+              <span class="nearby-dot">·</span>
+              <span class="nearby-rating">⭐ {{ place.googleRating }}</span>
+            </p>
+          </div>
+          <div class="nearby-card-right">
+            <span class="nearby-distance">{{ getDistance(place) | number:'1.0-1' }} {{ 'common.km' | translate }}</span>
+            <ion-icon name="chevron-forward-outline" class="nearby-chevron"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
