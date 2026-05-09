@@ -57,22 +57,35 @@ export class ReviewsService {
       date: '2024-02-25', source: 'google', profilePhoto: '' },
   ];
 
-  // Avis génériques utilisés en fallback pour tous les lieux sans avis spécifiques
   private readonly FALLBACK_REVIEWS: Review[] = [
-    { id: 'f1', placeId: '__fallback__', authorName: 'Mohammed A.', rating: 5,
-      text: 'Un lieu incontournable en Algérie, vraiment magnifique ! Je recommande vivement la visite.',
-      date: '2024-03-10', source: 'google', profilePhoto: '' },
-    { id: 'f2', placeId: '__fallback__', authorName: 'Amira K.', rating: 4,
-      text: 'Belle découverte, le cadre est superbe. À faire absolument lors d\'un passage dans la région.',
-      date: '2024-02-20', source: 'google', profilePhoto: '' },
-    { id: 'f3', placeId: '__fallback__', authorName: 'Rachid B.', rating: 5,
-      text: 'Endroit magnifique avec beaucoup de charme et d\'authenticité. On y revient avec plaisir.',
-      date: '2024-01-15', source: 'internal', profilePhoto: '' },
+    { id: 'f1',  placeId: '__fallback__', authorName: 'Mohammed A.',   rating: 5, text: 'Un lieu incontournable en Algérie, vraiment magnifique ! Je recommande vivement la visite.', date: '2024-03-10', source: 'google', profilePhoto: '' },
+    { id: 'f2',  placeId: '__fallback__', authorName: 'Amira K.',       rating: 4, text: 'Belle découverte, le cadre est superbe. À faire absolument lors d\'un passage dans la région.', date: '2024-02-20', source: 'google', profilePhoto: '' },
+    { id: 'f3',  placeId: '__fallback__', authorName: 'Rachid B.',      rating: 5, text: 'Endroit magnifique avec beaucoup de charme et d\'authenticité. On y revient avec plaisir.', date: '2024-01-15', source: 'internal', profilePhoto: '' },
+    { id: 'f4',  placeId: '__fallback__', authorName: 'Leila M.',       rating: 5, text: 'Une expérience inoubliable. L\'endroit est propre, bien entretenu et le personnel est très accueillant.', date: '2024-04-05', source: 'google', profilePhoto: '' },
+    { id: 'f5',  placeId: '__fallback__', authorName: 'Sofiane D.',     rating: 4, text: 'Très bel endroit, idéal pour se ressourcer. Les paysages sont à couper le souffle.', date: '2024-03-22', source: 'google', profilePhoto: '' },
+    { id: 'f6',  placeId: '__fallback__', authorName: 'Yasmine T.',     rating: 5, text: 'J\'ai visité avec ma famille et nous avons adoré. Les enfants ont été ravis, ambiance parfaite.', date: '2024-02-08', source: 'google', profilePhoto: '' },
+    { id: 'f7',  placeId: '__fallback__', authorName: 'Karim O.',       rating: 4, text: 'Un endroit authentique qui mérite le détour. On ressent vraiment l\'histoire et la culture algérienne.', date: '2024-05-01', source: 'google', profilePhoto: '' },
+    { id: 'f8',  placeId: '__fallback__', authorName: 'Nour S.',        rating: 5, text: 'Absolument splendide ! Photos insuffisantes pour rendre justice à la beauté du lieu. À voir absolument.', date: '2024-01-30', source: 'google', profilePhoto: '' },
+    { id: 'f9',  placeId: '__fallback__', authorName: 'Hichem Z.',      rating: 3, text: 'Bien mais peut mieux faire côté entretien. Le site en lui-même est magnifique, dommage.', date: '2024-04-18', source: 'google', profilePhoto: '' },
+    { id: 'f10', placeId: '__fallback__', authorName: 'Meriem L.',      rating: 5, text: 'Coup de cœur total ! L\'un des plus beaux endroits que j\'ai visités en Algérie.', date: '2024-03-01', source: 'google', profilePhoto: '' },
+    { id: 'f11', placeId: '__fallback__', authorName: 'Tarek F.',       rating: 4, text: 'Super endroit pour une sortie en famille ou entre amis. Cadre naturel et agréable.', date: '2024-02-14', source: 'internal', profilePhoto: '' },
+    { id: 'f12', placeId: '__fallback__', authorName: 'Siham B.',       rating: 5, text: 'On a passé une journée fantastique. Le lieu est bien aménagé et très propre. On reviendra !', date: '2024-05-12', source: 'google', profilePhoto: '' },
+    { id: 'f13', placeId: '__fallback__', authorName: 'Walid N.',       rating: 4, text: 'Très belle sortie, je recommande à tout le monde. L\'accès est facile et le cadre est reposant.', date: '2024-03-28', source: 'google', profilePhoto: '' },
+    { id: 'f14', placeId: '__fallback__', authorName: 'Rania C.',       rating: 5, text: 'Magnifique ! Un endroit à découvrir absolument. L\'Algérie regorge de trésors comme celui-là.', date: '2024-01-20', source: 'google', profilePhoto: '' },
+    { id: 'f15', placeId: '__fallback__', authorName: 'Amine G.',       rating: 4, text: 'Très sympa, bonne ambiance. Les alentours sont agréables pour se balader.', date: '2024-04-10', source: 'google', profilePhoto: '' },
   ];
 
   getReviewsByPlaceId(placeId: string): Observable<Review[]> {
     const specific = this.REVIEWS.filter(r => r.placeId === placeId);
-    return of(specific.length > 0 ? specific : this.FALLBACK_REVIEWS);
+    if (specific.length > 0) return of(specific);
+    const hash = placeId.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    const pool = this.FALLBACK_REVIEWS;
+    const i1 = hash % pool.length;
+    const i2 = (hash + 3) % pool.length;
+    const i3 = (hash + 7) % pool.length;
+    const picks = [pool[i1], pool[i2]];
+    if (i3 !== i1 && i3 !== i2) picks.push(pool[i3]);
+    return of(picks);
   }
 
   getAverageRating(placeId: string): number {

@@ -4,12 +4,16 @@ export interface Place {
   nameAr: string;
   nameFr: string;
   nameEn: string;
+  nameEs?: string;
+  nameDe?: string;
   category: Category;
   wilaya: string;
   wilayaCode?: number;
   description: string;
   descriptionAr: string;
   descriptionEn?: string;
+  descriptionEs?: string;
+  descriptionDe?: string;
   images: string[];
   videoUrl?: string;
   address: string;

@@ -326,12 +326,17 @@ export class CartePage implements OnDestroy {
     this.router.navigate(['/place', id]);
   }
 
+  private mapsUrl(place: Place): string {
+    const query = encodeURIComponent(`${place.nameFr}, ${place.wilaya}, Algérie`);
+    return `https://www.google.com/maps/search/?api=1&query=${query}`;
+  }
+
   private addMarker(place: Place): void {
     if (!this.map) return;
     const marker = L.marker([place.latitude, place.longitude], {
       icon: markerIcon(place.category),
     });
-    marker.bindPopup(this.buildPopup(place), { maxWidth: 220 });
+    marker.bindPopup(this.buildPopup(place), { maxWidth: 240 });
     marker.addTo(this.map);
     marker.on('popupopen', () => {
       const btn = document.getElementById(`goto-${place.id}`);
@@ -342,14 +347,21 @@ export class CartePage implements OnDestroy {
   }
 
   private buildPopup(place: Place): string {
+    const mapsUrl = this.mapsUrl(place);
     return `
-      <div style="font-family:sans-serif;min-width:160px">
+      <div style="font-family:sans-serif;min-width:170px">
         <p style="font-weight:700;font-size:14px;margin:0 0 4px">${place.nameFr}</p>
         <p style="font-size:12px;color:#555;margin:0 0 8px">📍 ${place.wilaya} · ⭐ ${place.googleRating}</p>
-        <button id="goto-${place.id}"
-          style="background:#006233;color:white;border:none;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;width:100%">
-          ${this.t.get('detail.see_maps')}
-        </button>
+        <div style="display:flex;gap:6px">
+          <button id="goto-${place.id}"
+            style="background:#4B5563;color:white;border:none;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;flex:1">
+            Détails
+          </button>
+          <a href="${mapsUrl}" target="_blank"
+            style="background:#006233;color:white;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;flex:1;text-align:center;display:inline-block">
+            📍 Maps
+          </a>
+        </div>
       </div>`;
   }
 

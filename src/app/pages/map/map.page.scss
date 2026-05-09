@@ -123,6 +123,7 @@ ion-content {
 
 .sort-bar {
   display: flex;
+  align-items: center;
   gap: 8px;
   padding: 12px 16px 4px;
   overflow-x: auto;
@@ -153,6 +154,112 @@ ion-content {
     }
   }
 }
+
+.sort-bar-spacer { flex: 1; min-width: 8px; }
+
+.weather-mini-chip {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #0EA5E9;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(14,165,233,0.30);
+  &:active { transform: scale(0.95); }
+}
+
+.weather-mini-temp { font-size: 13px; font-weight: 700; }
+
+.weather-mini-loading {
+  background: #F3F4F6;
+  box-shadow: none;
+}
+
+// ─── Panneau détail météo ───────────────────
+.map-weather-panel {
+  margin: 4px 16px 8px;
+  background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  border-radius: 14px;
+  padding: 14px 16px;
+  animation: mapWeatherIn 0.2s ease;
+}
+
+@keyframes mapWeatherIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.map-weather-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.map-weather-icon { font-size: 32px; line-height: 1; }
+
+.map-weather-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.map-weather-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  margin: 0 0 2px;
+}
+
+.map-weather-temp {
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  line-height: 1;
+}
+
+.map-weather-stats {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.90);
+  font-weight: 600;
+  span { display: flex; align-items: center; gap: 4px; }
+  ion-icon { font-size: 13px; color: #BAE6FD; }
+}
+
+.map-weather-hourly {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.map-hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255,255,255,0.20);
+  border-radius: 8px;
+  padding: 6px 8px;
+  min-width: 46px;
+  flex-shrink: 0;
+}
+
+.map-hourly-time { font-size: 9px; color: rgba(255,255,255,0.80); font-weight: 600; }
+.map-hourly-temp { font-size: 12px; color: white; font-weight: 700; }
 
 // ============================================================
 // FILTRE CATÉGORIE

@@ -100,6 +100,10 @@ export class HomePage implements OnInit, OnDestroy {
     this.router.navigate(['/tabs/map'], { queryParams: { wilaya } });
   }
 
+  navigateToVisa(): void {
+    this.router.navigate(['/visa']);
+  }
+
   getAvailableLanguages() { return this.t.getAvailableLanguages(); }
   getCurrentLanguage(): AppLanguage { return this.t.getCurrentLanguage(); }
   setLanguage(lang: AppLanguage): void { this.t.setLanguage(lang); }

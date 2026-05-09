@@ -18,6 +18,16 @@
     </button>
   </div>
 
+  <!-- Bouton Visa -->
+  <div class="visa-cta-wrap" (click)="navigateToVisa()">
+    <span class="visa-cta-icon">🛂</span>
+    <div class="visa-cta-text">
+      <p class="visa-cta-title">Demande de Visa</p>
+      <p class="visa-cta-sub">Algérie · 7 documents · Démarches complètes</p>
+    </div>
+    <span class="visa-cta-arrow">›</span>
+  </div>
+
   <!-- Hero Banner — image unique par langue -->
   <div class="hero-banner">
     <img [src]="heroImage" (error)="onHeroError($event)" class="hero-img" alt="Algeria">

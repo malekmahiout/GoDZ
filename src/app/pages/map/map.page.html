@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-  <div class="top-banner-wrap">
+  <div class="top-banner-wrap" (click)="router.navigate(['/home'])" style="cursor:pointer">
     <img src="assets/photos/bandeau_drapeau2.png" alt="GoDZ Algérie" class="top-banner-img">
   </div>
   <ion-toolbar>
@@ -31,11 +31,41 @@
     </div>
   </div>
 
-  <!-- Sort bar -->
+  <!-- Sort bar + météo chip -->
   <div class="sort-bar">
     <button [class.active]="sortBy==='rating'"     (click)="setSortBy('rating')">⭐ {{ 'map.sort_rating' | translate }}</button>
     <button [class.active]="sortBy==='popularity'" (click)="setSortBy('popularity')">🔥 {{ 'map.sort_popularity' | translate }}</button>
     <button [class.active]="sortBy==='reviews'"    (click)="setSortBy('reviews')">💬 {{ 'map.sort_reviews' | translate }}</button>
+    <div class="sort-bar-spacer"></div>
+    <button class="weather-mini-chip" *ngIf="weather && !weatherLoading" (click)="toggleWeatherDetail()">
+      <span>{{weather.current.icon}}</span>
+      <span class="weather-mini-temp">{{weather.current.temperature}}°C</span>
+    </button>
+    <button class="weather-mini-chip weather-mini-loading" *ngIf="weatherLoading" disabled>
+      <ion-spinner name="dots" style="width:14px;height:14px;color:#9CA3AF"></ion-spinner>
+    </button>
+  </div>
+
+  <!-- Panneau détail météo (dépliable) -->
+  <div class="map-weather-panel" *ngIf="showWeatherDetail && weather">
+    <div class="map-weather-main">
+      <span class="map-weather-icon">{{weather.current.icon}}</span>
+      <div class="map-weather-text">
+        <p class="map-weather-label">{{getWeatherLabel()}} · {{selectedWilaya || 'Alger'}}</p>
+        <p class="map-weather-temp">{{weather.current.temperature}}°C</p>
+      </div>
+      <div class="map-weather-stats">
+        <span><ion-icon name="water-outline"></ion-icon> {{weather.current.humidity}}%</span>
+        <span><ion-icon name="speedometer-outline"></ion-icon> {{weather.current.windSpeed}} km/h</span>
+      </div>
+    </div>
+    <div class="map-weather-hourly" *ngIf="weather.hourly.length > 0">
+      <div class="map-hourly-item" *ngFor="let h of weather.hourly">
+        <span class="map-hourly-time">{{h.hour}}</span>
+        <span>{{h.icon}}</span>
+        <span class="map-hourly-temp">{{h.temperature}}°</span>
+      </div>
+    </div>
   </div>
 
   <!-- Category filter -->

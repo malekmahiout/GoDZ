@@ -51,6 +51,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
   collectionPickList: import('../../services/favorites.service').FavoriteCollection[] = [];
   selectedCollectionId = 'default';
 
+
   constructor(
     private route: ActivatedRoute,
     private navCtrl: NavController,
@@ -61,7 +62,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
     private toastCtrl: ToastController,
     public t: TranslationService,
     private photoService: PhotoService,
-    private groqTranslate: GroqTranslateService
+    private groqTranslate: GroqTranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -248,8 +249,8 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
 
   openGoogleMaps(): void {
     if (!this.place) return;
-    const q = encodeURIComponent(`${this.place.nameFr} ${this.place.wilaya} Algérie`);
-    window.open(`https://maps.google.com/maps?q=${q}&ll=${this.place.latitude},${this.place.longitude}`, '_blank');
+    const query = encodeURIComponent(`${this.place.nameFr}, ${this.place.wilaya}, Algérie`);
+    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
   }
 
   openWikipedia(): void {

@@ -182,6 +182,222 @@ ion-content { --background: #FFFFFF; }
 }
 
 // ============================================================
+// MÉTÉO WIDGET
+// ============================================================
+
+// ─── Carte météo pleine largeur ─────────────
+.weather-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(14,165,233,0.30);
+  transition: transform 0.15s;
+  &:active { transform: scale(0.98); }
+}
+
+.weather-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.weather-card-icon { font-size: 36px; line-height: 1; }
+
+.weather-card-temp {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.weather-card-label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  margin-top: 2px;
+}
+
+.weather-card-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.weather-card-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.90);
+  ion-icon { font-size: 14px; color: #BAE6FD; }
+}
+
+.weather-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  min-width: 80px;
+  box-shadow: 0 1px 4px rgba(14,165,233,0.10);
+
+  &:active { transform: scale(0.96); background: #E0F2FE; }
+
+  &--loading {
+    justify-content: center;
+    background: #F9FAFB;
+    border-color: #E5E7EB;
+    pointer-events: none;
+  }
+}
+
+.weather-icon { font-size: 22px; line-height: 1; }
+
+.weather-chip-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+
+.weather-temp {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0EA5E9;
+  line-height: 1;
+}
+
+.weather-label-sm {
+  font-size: 10px;
+  color: #64748B;
+  line-height: 1.2;
+  max-width: 68px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.weather-chevron {
+  font-size: 14px;
+  color: #94A3B8;
+  margin-left: 2px;
+}
+
+// ─── Panneau de détail météo ────────────────
+.weather-detail-panel {
+  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid #BAE6FD;
+  box-shadow: 0 2px 12px rgba(14,165,233,0.10);
+  animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.weather-detail-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.weather-detail-icon { font-size: 44px; line-height: 1; }
+
+.weather-detail-info { flex: 1; }
+
+.weather-detail-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0369A1;
+  margin: 0 0 2px;
+}
+
+.weather-detail-temp {
+  font-size: 32px;
+  font-weight: 900;
+  color: #0EA5E9;
+  margin: 0;
+  line-height: 1;
+}
+
+.weather-detail-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.weather-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  background: rgba(255,255,255,0.7);
+  padding: 4px 8px;
+  border-radius: 8px;
+
+  ion-icon { font-size: 14px; color: #0EA5E9; }
+}
+
+// ─── Prévision horaire ──────────────────────
+.weather-hourly {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255,255,255,0.75);
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-width: 52px;
+  flex-shrink: 0;
+  border: 1px solid rgba(186,230,253,0.6);
+}
+
+.hourly-time {
+  font-size: 10px;
+  color: #64748B;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hourly-icon { font-size: 18px; }
+
+.hourly-temp {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0EA5E9;
+}
+
+// ============================================================
 // SECTION DESCRIPTION
 // ============================================================
 

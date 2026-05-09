@@ -1,0 +1,151 @@
+<ion-header class="ion-no-border vm-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <button class="back-btn" (click)="goBack()">
+        <span class="back-icon">‹</span>
+      </button>
+    </ion-buttons>
+    <ion-title class="vm-title">Modalités de dépôt</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="vm-content">
+
+  <!-- Hero -->
+  <div class="vm-hero">
+    <div class="vm-hero-deco">
+      <div class="deco-c c1"></div>
+      <div class="deco-c c2"></div>
+    </div>
+    <div class="vm-hero-body">
+      <span class="vm-hero-icon">📅</span>
+      <div class="vm-hero-text">
+        <h1 class="vm-hero-title">Dépôt de visa</h1>
+        <p class="vm-hero-sub">Consulat Général d'Algérie</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="vm-body">
+
+    <!-- Qui est concerné -->
+    <div class="vm-card">
+      <div class="vm-card-title">👥 Qui est concerné ?</div>
+      <p class="vm-text">Les ressortissants <strong>français résidant dans les Hauts-de-Seine (92), les Yvelines (78) et l'Eure-et-Loir (28)</strong> doivent obtenir un visa d'entrée délivré par le consulat avant tout déplacement en Algérie.</p>
+      <p class="vm-text">Les autres étrangers soumis aux formalités visa sont tenus de <strong>consulter le service des visas du consulat</strong> pour connaître les modalités qui leur sont applicables.</p>
+    </div>
+
+    <!-- Dépôt et RDV -->
+    <div class="vm-card">
+      <div class="vm-card-title">📋 Dépôt de la demande</div>
+      <div class="vm-info-row">
+        <span class="vm-info-icon">📌</span>
+        <p class="vm-text">Le dépôt s'effectue <strong>sur rendez-vous uniquement</strong>, par l'intéressé lui-même ou par une personne mandatée (procuration + pièce d'identité du mandataire).</p>
+      </div>
+      <div class="vm-info-row">
+        <span class="vm-info-icon">🏛️</span>
+        <p class="vm-text">Passeports <strong>diplomatiques ou de service</strong> et demandes « Presse » : s'adresser à l'<strong>Ambassade d'Algérie à Paris</strong> — 50 rue de Lisbonne, 75008.</p>
+      </div>
+      <div class="vm-info-row">
+        <span class="vm-info-icon">📄</span>
+        <p class="vm-text">Le formulaire de demande est à télécharger ou disponible directement au consulat.</p>
+      </div>
+      <div class="vm-alert-row">
+        <span>⚠️</span>
+        <p>La prise de rendez-vous ne concerne pas tous les consulats — rapprochez-vous du consulat dont vous dépendez.</p>
+      </div>
+    </div>
+
+    <!-- Horaires -->
+    <div class="vm-card">
+      <div class="vm-card-title">🕐 Horaires d'ouverture</div>
+      <div class="vm-schedule">
+        <div class="vm-schedule-row">
+          <div class="vm-schedule-type">
+            <span class="vm-schedule-badge vm-badge-depot">Dépôt</span>
+          </div>
+          <div class="vm-schedule-info">
+            <p class="vm-schedule-days">Mardi · Mercredi · Vendredi</p>
+            <p class="vm-schedule-time">09h00 – 12h00</p>
+          </div>
+          <span class="vm-schedule-rdv">Sur RDV</span>
+        </div>
+        <div class="vm-schedule-row">
+          <div class="vm-schedule-type">
+            <span class="vm-schedule-badge vm-badge-retrait">Retrait</span>
+          </div>
+          <div class="vm-schedule-info">
+            <p class="vm-schedule-days">Mardi · Mercredi · Vendredi</p>
+            <p class="vm-schedule-time">13h30 – 14h30</p>
+          </div>
+          <span class="vm-schedule-rdv vm-schedule-rdv-libre">Sans RDV</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Délai -->
+    <div class="vm-card vm-card-delay">
+      <div class="vm-delay-left">
+        <div class="vm-card-title" style="margin-bottom:6px">⏱️ Délai de traitement</div>
+        <p class="vm-text">Les dossiers complets sont traités dans un délai de :</p>
+      </div>
+      <div class="vm-delay-badge">
+        <span class="vm-delay-num">14</span>
+        <span class="vm-delay-unit">jours</span>
+      </div>
+    </div>
+
+    <!-- Frais -->
+    <div class="vm-card">
+      <div class="vm-card-title">💶 Frais de visa — Ressortissants français</div>
+      <p class="vm-sub-note">En vigueur depuis le 02 février 2020.</p>
+
+      <div class="vm-fees-section">
+        <div class="vm-fees-group-label">Visa ≤ 90 jours</div>
+        <div class="vm-fees-grid">
+          <div class="vm-fees-row">
+            <span class="vm-fees-age">Plus de 12 ans</span>
+            <span class="vm-fees-price">110 €</span>
+          </div>
+          <div class="vm-fees-row">
+            <span class="vm-fees-age">De 6 à 12 ans</span>
+            <span class="vm-fees-price">70 €</span>
+          </div>
+          <div class="vm-fees-row">
+            <span class="vm-fees-age">Moins de 6 ans</span>
+            <span class="vm-fees-price">30 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vm-fees-section" style="margin-bottom:0">
+        <div class="vm-fees-group-label vm-fees-group-label-alt">Visa plus de 90 jours</div>
+        <div class="vm-fees-grid">
+          <div class="vm-fees-row">
+            <span class="vm-fees-age">Tous âges</span>
+            <span class="vm-fees-price vm-fees-price-alt">130 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vm-payment-note">
+        <span>💳</span>
+        <p>Paiement <strong>par carte bancaire uniquement</strong>, le jour du dépôt.</p>
+      </div>
+      <div class="vm-refund-note">
+        <span>🚫</span>
+        <p>En cas de refus, les frais de visa <strong>ne sont pas remboursés</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Footer info -->
+    <div class="vm-footer-note">
+      <span class="vm-footer-icon">ℹ️</span>
+      <p>Ces informations proviennent du <strong>Consulat Général d'Algérie</strong> et sont susceptibles d'évoluer. Vérifiez auprès du consulat compétent avant tout dépôt.</p>
+    </div>
+
+  </div>
+
+  <div style="height: 32px"></div>
+
+</ion-content>

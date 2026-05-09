@@ -1,0 +1,125 @@
+<ion-header class="ion-no-border visa-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <button class="back-btn" (click)="goBack()">
+        <span class="back-icon">‹</span>
+      </button>
+    </ion-buttons>
+    <ion-title class="visa-toolbar-title">Visa Algérie</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="visa-content">
+
+  <!-- Hero -->
+  <div class="visa-hero">
+    <div class="hero-decoration">
+      <div class="deco-circle c1"></div>
+      <div class="deco-circle c2"></div>
+      <div class="deco-circle c3"></div>
+    </div>
+    <div class="hero-body">
+      <div class="passport-icon">🛂</div>
+      <div class="hero-text">
+        <h1 class="hero-title">Visa touristique</h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- Source officielle -->
+  <div class="source-notice">
+    <span class="source-icon">🏛️</span>
+    <p class="source-text">Les informations et documents requis ci-dessous proviennent du <strong>Consulat Général d'Algérie</strong> et sont susceptibles d'évoluer. Vérifiez auprès du consulat compétent avant tout dépôt.</p>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title">Pièces à fournir</span>
+      <span class="progress-count">7 documents</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="progress-steps">
+      <span *ngFor="let doc of documents" class="progress-dot"></span>
+    </div>
+  </div>
+
+  <!-- Documents list -->
+  <div class="documents-list">
+    <div *ngFor="let doc of documents; let i = index"
+         class="doc-card"
+         [style.animation-delay]="(i * 0.07) + 's'">
+
+      <!-- Card header -->
+      <div class="doc-card-header">
+        <div class="step-badge" [style.background]="doc.categoryColor">
+          <span class="step-num">{{ doc.step }}</span>
+        </div>
+        <div class="doc-main">
+          <div class="doc-title-row">
+            <span class="doc-icon">{{ doc.icon }}</span>
+            <h3 class="doc-title">{{ doc.title }}
+              <span *ngIf="doc.count" class="doc-count">{{ doc.count }}</span>
+            </h3>
+          </div>
+          <div class="cat-badge" [style.color]="doc.categoryColor" [style.background]="doc.categoryBg">
+            {{ doc.category }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p class="doc-description">{{ doc.description }}</p>
+
+      <!-- Warning -->
+      <div *ngIf="doc.warning" class="doc-warning">
+        <span class="warning-icon">⚠️</span>
+        <span class="warning-text">{{ doc.warning }}</span>
+      </div>
+
+      <!-- Highlight box -->
+      <div *ngIf="doc.highlight" class="doc-highlight">
+        <div class="highlight-header">
+          <span class="highlight-star">⚡</span>
+          <span class="highlight-label">Astuce</span>
+        </div>
+        <p class="highlight-text">{{ doc.highlight }}</p>
+      </div>
+
+      <!-- Actions -->
+      <div *ngIf="doc.actions && doc.actions.length" class="doc-actions">
+        <button *ngFor="let action of doc.actions"
+                class="action-btn"
+                [class.action-primary]="action.type === 'primary'"
+                [class.action-secondary]="action.type === 'secondary'"
+                (click)="onAction(action)">
+          <span class="action-icon">{{ action.icon }}</span>
+          <span class="action-label">{{ action.label }}</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Alert mineurs -->
+  <div class="minors-alert">
+    <div class="alert-icon-wrap">
+      <span class="alert-icon">👶</span>
+    </div>
+    <div class="alert-content">
+      <p class="alert-title">Enfants mineurs</p>
+      <p class="alert-text">La présence de l'un des deux parents est obligatoire lors du dépôt. Les noms des enfants doivent figurer sur le justificatif d'hébergement.</p>
+    </div>
+  </div>
+
+  <!-- Footer warning -->
+  <div class="footer-warning">
+    <span class="fw-icon">ℹ️</span>
+    <p class="fw-text">Tout dossier incomplet sera rejeté. Des justificatifs complémentaires peuvent être demandés selon votre situation.</p>
+  </div>
+
+  <div style="height: 32px"></div>
+
+</ion-content>

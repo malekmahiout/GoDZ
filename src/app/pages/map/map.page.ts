@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { PlacesService } from '../../services/places.service';
 import { TranslationService, AppLanguage } from '../../services/translation.service';
 import { GroqTranslateService } from '../../services/groq-translate.service';
+import { WeatherService, WeatherData } from '../../services/weather.service';
 import { Place, Category } from '../../models/place.model';
 
 interface CategoryFilter {
@@ -27,6 +28,20 @@ export class MapPage implements OnInit, OnDestroy {
 
   wilayas = ['Alger', 'Oran', 'Tizi Ouzou', 'Tlemcen', 'Béjaïa', 'Annaba'];
 
+  // Météo
+  weather: WeatherData | null = null;
+  weatherLoading = false;
+  showWeatherDetail = false;
+
+  private readonly wilayaCoords: Record<string, [number, number]> = {
+    'Alger':      [36.737, 3.086],
+    'Oran':       [35.697, -0.633],
+    'Tizi Ouzou': [36.712, 4.049],
+    'Tlemcen':    [34.878, -1.317],
+    'Béjaïa':     [36.752, 5.084],
+    'Annaba':     [36.896, 7.758],
+  };
+
   categoryFilters: CategoryFilter[] = [
     { id: 'all',         emoji: '🌍' },
     { id: 'monuments',   emoji: '🏛️' },
@@ -41,14 +56,17 @@ export class MapPage implements OnInit, OnDestroy {
 
   constructor(
     private placesService: PlacesService,
-    private router: Router,
+    public router: Router,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private groqTranslate: GroqTranslateService,
+    private weatherService: WeatherService,
     public t: TranslationService
   ) {}
 
   ngOnInit(): void {
+    this.loadWeather(null);
+
     this.placesService.getPlaces().subscribe(places => {
       this.allPlaces = places;
       this.applyFilters();
@@ -91,6 +109,34 @@ export class MapPage implements OnInit, OnDestroy {
   selectWilaya(name: string): void {
     this.selectedWilaya = this.selectedWilaya === name ? null : name;
     this.applyFilters();
+    this.loadWeather(this.selectedWilaya);
+  }
+
+  loadWeather(wilaya: string | null): void {
+    const coords = wilaya ? this.wilayaCoords[wilaya] : this.wilayaCoords['Alger'];
+    if (!coords) return;
+    this.weatherLoading = true;
+    this.weather = null;
+    this.showWeatherDetail = false;
+    this.weatherService.getWeather(coords[0], coords[1]).subscribe({
+      next: w => { this.weather = w; this.weatherLoading = false; },
+      error: () => { this.weatherLoading = false; }
+    });
+  }
+
+  toggleWeatherDetail(): void { this.showWeatherDetail = !this.showWeatherDetail; }
+
+  getWeatherLabel(): string {
+    if (!this.weather) return '';
+    const c = this.weather.current;
+    const lang = this.t.getCurrentLanguage();
+    switch (lang) {
+      case 'ar': return c.labelAr;
+      case 'en': return c.labelEn;
+      case 'es': return c.labelEs;
+      case 'de': return c.labelDe;
+      default:   return c.labelFr;
+    }
   }
 
   onSearch(event: any): void {
@@ -142,10 +188,8 @@ export class MapPage implements OnInit, OnDestroy {
   }
 
   openGoogleMaps(place: Place): void {
-    window.open(
-      `https://www.google.com/maps/search/?api=1&query=${place.latitude},${place.longitude}`,
-      '_blank'
-    );
+    const query = encodeURIComponent(`${place.nameFr}, ${place.wilaya}, Algérie`);
+    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
   }
 
   getCatEmoji(cat: Category): string {
