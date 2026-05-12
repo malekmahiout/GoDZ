@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PDFDocument } from 'pdf-lib';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { TranslationService } from '../../services/translation.service';
 
 interface PhotonFeature {
   type: string;
@@ -68,11 +69,11 @@ export class VisaFormPage implements OnInit {
   ];
 
   steps = [
-    { label: 'Identité', icon: '👤' },
-    { label: 'Famille', icon: '👨‍👩‍👧' },
-    { label: 'Passeport', icon: '🛂' },
-    { label: 'Profession', icon: '💼' },
-    { label: 'Voyage', icon: '✈️' }
+    { label: 'visa.step_identity', icon: '👤' },
+    { label: 'visa.step_family', icon: '👨‍👩‍👧' },
+    { label: 'visa.step_passport', icon: '🛂' },
+    { label: 'visa.step_profession', icon: '💼' },
+    { label: 'visa.step_travel', icon: '✈️' }
   ];
 
   form = {
@@ -122,7 +123,12 @@ export class VisaFormPage implements OnInit {
     nbre_sejours_prec: ''
   };
 
-  constructor(private router: Router, private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    public t: TranslationService
+  ) {}
 
   ngOnInit(): void {}
 

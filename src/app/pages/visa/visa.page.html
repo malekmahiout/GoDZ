@@ -5,7 +5,7 @@
         <span class="back-icon">‹</span>
       </button>
     </ion-buttons>
-    <ion-title class="visa-toolbar-title">Visa Algérie</ion-title>
+    <ion-title class="visa-toolbar-title">{{ 'visa.page_title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
     <div class="hero-body">
       <div class="passport-icon">🛂</div>
       <div class="hero-text">
-        <h1 class="hero-title">Visa touristique</h1>
+        <h1 class="hero-title">{{ 'visa.hero_title' | translate }}</h1>
       </div>
     </div>
   </div>
@@ -29,13 +29,13 @@
   <!-- Source officielle -->
   <div class="source-notice">
     <span class="source-icon">🏛️</span>
-    <p class="source-text">Les informations et documents requis ci-dessous proviennent du <strong>Consulat Général d'Algérie</strong> et sont susceptibles d'évoluer. Vérifiez auprès du consulat compétent avant tout dépôt.</p>
+    <p class="source-text" [innerHTML]="'visa.source_notice' | translate"></p>
   </div>
 
   <!-- Progress Bar -->
   <div class="progress-section">
     <div class="progress-header">
-      <span class="progress-title">Pièces à fournir</span>
+      <span class="progress-title">{{ 'visa.pieces_title' | translate }}</span>
       <span class="progress-count">7 documents</span>
     </div>
     <div class="progress-track">
@@ -60,32 +60,32 @@
         <div class="doc-main">
           <div class="doc-title-row">
             <span class="doc-icon">{{ doc.icon }}</span>
-            <h3 class="doc-title">{{ doc.title }}
+            <h3 class="doc-title">{{ doc.titleKey | translate }}
               <span *ngIf="doc.count" class="doc-count">{{ doc.count }}</span>
             </h3>
           </div>
           <div class="cat-badge" [style.color]="doc.categoryColor" [style.background]="doc.categoryBg">
-            {{ doc.category }}
+            {{ doc.catKey | translate }}
           </div>
         </div>
       </div>
 
       <!-- Description -->
-      <p class="doc-description">{{ doc.description }}</p>
+      <p class="doc-description">{{ doc.descKey | translate }}</p>
 
       <!-- Warning -->
-      <div *ngIf="doc.warning" class="doc-warning">
+      <div *ngIf="doc.warningKey" class="doc-warning">
         <span class="warning-icon">⚠️</span>
-        <span class="warning-text">{{ doc.warning }}</span>
+        <span class="warning-text">{{ doc.warningKey | translate }}</span>
       </div>
 
       <!-- Highlight box -->
-      <div *ngIf="doc.highlight" class="doc-highlight">
+      <div *ngIf="doc.highlightKey" class="doc-highlight">
         <div class="highlight-header">
           <span class="highlight-star">⚡</span>
-          <span class="highlight-label">Astuce</span>
+          <span class="highlight-label">{{ 'visa.tip_label' | translate }}</span>
         </div>
-        <p class="highlight-text">{{ doc.highlight }}</p>
+        <p class="highlight-text">{{ doc.highlightKey | translate }}</p>
       </div>
 
       <!-- Actions -->
@@ -96,7 +96,7 @@
                 [class.action-secondary]="action.type === 'secondary'"
                 (click)="onAction(action)">
           <span class="action-icon">{{ action.icon }}</span>
-          <span class="action-label">{{ action.label }}</span>
+          <span class="action-label">{{ action.labelKey | translate }}</span>
         </button>
       </div>
 
@@ -109,15 +109,15 @@
       <span class="alert-icon">👶</span>
     </div>
     <div class="alert-content">
-      <p class="alert-title">Enfants mineurs</p>
-      <p class="alert-text">La présence de l'un des deux parents est obligatoire lors du dépôt. Les noms des enfants doivent figurer sur le justificatif d'hébergement.</p>
+      <p class="alert-title">{{ 'visa.minors_title' | translate }}</p>
+      <p class="alert-text">{{ 'visa.minors_text' | translate }}</p>
     </div>
   </div>
 
   <!-- Footer warning -->
   <div class="footer-warning">
     <span class="fw-icon">ℹ️</span>
-    <p class="fw-text">Tout dossier incomplet sera rejeté. Des justificatifs complémentaires peuvent être demandés selon votre situation.</p>
+    <p class="fw-text">{{ 'visa.footer_incomplete' | translate }}</p>
   </div>
 
   <div style="height: 32px"></div>

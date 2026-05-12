@@ -1,18 +1,26 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslationService } from '../../services/translation.service';
+
+interface VisaAction {
+  id: 'download' | 'prefill' | 'modalites';
+  labelKey: string;
+  icon: string;
+  type: 'primary' | 'secondary';
+}
 
 interface VisaDocument {
   step: number;
-  title: string;
+  titleKey: string;
   count?: string;
-  description: string;
-  category: string;
+  descKey: string;
+  catKey: string;
   categoryColor: string;
   categoryBg: string;
   icon: string;
-  actions?: { label: string; icon: string; type: 'primary' | 'secondary'; url?: string }[];
-  highlight?: string;
-  warning?: string;
+  actions?: VisaAction[];
+  highlightKey?: string;
+  warningKey?: string;
 }
 
 @Component({
@@ -26,96 +34,96 @@ export class VisaPage {
   documents: VisaDocument[] = [
     {
       step: 1,
-      title: 'Formulaire de demande de visa',
+      titleKey: 'visa.doc1_title',
       count: '×2',
-      description: 'Dûment rempli, daté et signé en double exemplaire',
-      category: 'Administratif',
+      descKey: 'visa.doc1_desc',
+      catKey: 'visa.doc1_cat',
       categoryColor: '#006233',
       categoryBg: 'rgba(0,98,51,0.10)',
       icon: '📋',
       actions: [
-        { label: 'Télécharger le PDF vierge', icon: '⬇️', type: 'secondary' },
-        { label: 'Préremplir en ligne', icon: '✏️', type: 'primary' },
-        { label: 'Modalités de dépôt', icon: '📅', type: 'secondary' }
+        { id: 'download',  labelKey: 'visa.doc1_action_download',  icon: '⬇️', type: 'secondary' },
+        { id: 'prefill',   labelKey: 'visa.doc1_action_prefill',   icon: '✏️', type: 'primary'   },
+        { id: 'modalites', labelKey: 'visa.doc1_action_modalites', icon: '📅', type: 'secondary' }
       ],
-      highlight: 'Préremplissez le formulaire en ligne — Gagnez du temps en saisissant vos informations directement dans l\'application.'
+      highlightKey: 'visa.doc1_highlight'
     },
     {
       step: 2,
-      title: 'Passeport valide',
-      description: 'Validité min. 6 mois + photocopie des 2 premiers feuillets + page du dernier visa Algérie',
-      category: 'Identité',
+      titleKey: 'visa.doc2_title',
+      descKey: 'visa.doc2_desc',
+      catKey: 'visa.doc2_cat',
       categoryColor: '#2563EB',
       categoryBg: 'rgba(37,99,235,0.10)',
       icon: '🛂'
     },
     {
       step: 3,
-      title: '2 photos d\'identité récentes',
+      titleKey: 'visa.doc3_title',
       count: '×2',
-      description: 'Collées sur chacun des deux formulaires',
-      category: 'Identité',
+      descKey: 'visa.doc3_desc',
+      catKey: 'visa.doc2_cat',
       categoryColor: '#2563EB',
       categoryBg: 'rgba(37,99,235,0.10)',
       icon: '🪪'
     },
     {
       step: 4,
-      title: 'Attestation d\'assurance voyage',
-      description: 'Rapatriement, hospitalisation et frais médicaux — couvrant toute la durée du voyage',
-      category: 'Assurance',
+      titleKey: 'visa.doc4_title',
+      descKey: 'visa.doc4_desc',
+      catKey: 'visa.doc4_cat',
       categoryColor: '#D97706',
       categoryBg: 'rgba(217,119,6,0.10)',
       icon: '🏥'
     },
     {
       step: 5,
-      title: 'Justificatif de ressources',
-      description: 'Salarié : fiche de paie ou attestation de travail. Non salarié : ASSEDIC, retraite, K-bis commerçant ou certificat de scolarité',
-      category: 'Financier',
+      titleKey: 'visa.doc5_title',
+      descKey: 'visa.doc5_desc',
+      catKey: 'visa.doc5_cat',
       categoryColor: '#7C3AED',
       categoryBg: 'rgba(124,58,237,0.10)',
       icon: '💶'
     },
     {
       step: 6,
-      title: 'Justificatif de domicile',
+      titleKey: 'visa.doc6_title',
       count: '< 3 mois',
-      description: 'Au nom du demandeur — facture EDF, téléphone fixe ou impôts',
-      category: 'Domicile',
+      descKey: 'visa.doc6_desc',
+      catKey: 'visa.doc6_cat',
       categoryColor: '#EA580C',
       categoryBg: 'rgba(234,88,12,0.10)',
       icon: '🏠',
-      warning: 'QR code obligatoire sur le document'
+      warningKey: 'visa.doc6_warning'
     },
     {
       step: 7,
-      title: 'Certificat d\'hébergement',
+      titleKey: 'visa.doc7_title',
       count: '< 3 mois',
-      description: 'Légalisé en mairie + copie pièce d\'identité de l\'hébergeant, ou réservation hôtel',
-      category: 'Hébergement',
+      descKey: 'visa.doc7_desc',
+      catKey: 'visa.doc7_cat',
       categoryColor: '#0891B2',
       categoryBg: 'rgba(8,145,178,0.10)',
       icon: '🏨',
-      warning: 'Si enfants mineurs : leurs noms doivent figurer sur le justificatif'
+      warningKey: 'visa.doc7_warning'
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, public t: TranslationService) {}
 
   goBack(): void {
     this.router.navigate(['/tabs/home']);
   }
 
-  onAction(action: { label: string; icon: string; type: string; url?: string }): void {
-    if (action.label.includes('Télécharger')) {
+  onAction(action: VisaAction): void {
+    if (action.id === 'download') {
       const a = document.createElement('a');
       a.href = 'assets/formulaire_visa.pdf';
       a.download = 'formulaire_visa.pdf';
       a.click();
-    } else if (action.label.includes('Préremplir')) {
+    } else if (action.id === 'prefill') {
       this.router.navigate(['/visa-form']);
-    } else if (action.label.includes('Modalités')) {
+    } else if (action.id === 'modalites') {
       this.router.navigate(['/visa-modalites']);
     }
   }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../shared/shared.module';
 import { VisaFormPage } from './visa-form.page';
 
 const routes: Routes = [
@@ -11,7 +12,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes), HttpClientModule],
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes), HttpClientModule, SharedModule],
   declarations: [VisaFormPage]
 })
 export class VisaFormPageModule {}
